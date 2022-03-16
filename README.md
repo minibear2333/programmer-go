@@ -31,5 +31,5 @@ For support, please create [issue](https://github.com/minibear2333/programmer-go
 
 可闭源，请注明出处！
 
-[apache license 2.0](https://choosealicense.com/licenses/apache-2.0/)
+[GNU General Public License v3.0](LICENSE)
 
