@@ -1,0 +1,1 @@
+docker build -t pg-backend:v1 -f Dockerfile .
