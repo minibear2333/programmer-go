@@ -19,6 +19,7 @@ npm install -g conventional-changelog-cli
 ## Authors
 
 - [@minibear2333](https://github.com/minibear2333)
+- [@gong-guowei](https://github.com/guowei-gong)
 - 其余贡献者请自行补充
 
 
