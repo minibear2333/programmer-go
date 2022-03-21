@@ -1,0 +1,35 @@
+[{
+  "_id": {
+    "$oid": "6235ff945c7435dcd65dc285"
+  },
+  "title": "面经标题",
+  "summary": "摘要",
+  "author": {
+    "_id": {
+      "$oid": "623600a25c7435dcd65dc289"
+    },
+    "name": "minibear2333"
+  },
+  "hot_num": 12,
+  "hard_status": "困难",
+  "updated_time": {
+    "$date": "2022-03-19T16:25:00Z"
+  },
+  "created_time": {
+    "$date": "2022-03-19T16:25:00Z"
+  },
+  "good": 0,
+  "bad": 0,
+  "click_num": 1,
+  "star_num": 0,
+  "tags": [
+    "Python-list"
+  ],
+  "comments": [
+    {
+      "_id": {
+        "$oid": "6235ff945c7435dcd65dc285"
+      }
+    }
+  ]
+}]
