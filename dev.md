@@ -23,6 +23,17 @@
 
 https://github.com/zeromicro/go-zero-template
 
+### mongo model 生成
+
+mongo的json文件放在 mongo 目录下
+
+* 首先使用[json2struct](http://json2struct.mervine.net/)工具，把单个json转换为struct
+* 增加到 [api/model/types.go](api/model/types.go) 里面，并修改增加`bson`的命名
+* 在 types.go 文件头部更新 `//go:generate goctl model mongo -t Comments -t xxx`
+* 执行脚本生成model
+
+参考：[mongo生成model](https://pkg.go.dev/git.i2edu.net/i2/go-zero/tools/goctl/model/mongo#section-readme)
+
 ### 其他
 
 开发文档参考 [go-zero项目开发](https://go-zero.dev/cn/project-dev.html)

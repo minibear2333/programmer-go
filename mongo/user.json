@@ -21,9 +21,9 @@
   "summary": "简短介绍一下自己的能力特长与优势",
   "interviews": {
     "hard_status": {
-      "困难": 0,
-      "简单": 0,
-      "中等": 0
+      "hard": 0,
+      "medium": 0,
+      "easy": 0
     }
   },
   "followers": [
@@ -80,9 +80,9 @@
   "summary": "简短介绍一下自己的能力特长与优势",
   "interviews": {
     "hard_status": {
-      "困难": 0,
-      "简单": 0,
-      "中等": 0
+      "hard": 0,
+      "medium": 0,
+      "easy": 0
     }
   },
   "followers": [
