@@ -67,37 +67,38 @@ type InterviewsTags struct {
 }
 
 type User struct {
-	ID        bson.ObjectId `bson:"_id"`
+	ID     bson.ObjectId `bson:"_id" json:"_id"`
+	OpenId string `bson:"open_id" json:"open_id"`
 	Avatar    string        `bson:"avatar" json:"avatar"`
 	Birthday  time.Time     `bson:"birthday" json:"birthday"`
 	Blog      string        `bson:"blog" json:"blog"`
 	City      string        `bson:"city" json:"city"`
 	Email     string        `bson:"email" json:"email"`
 	Followers []struct {
-		ID bson.ObjectId `bson:"_id" json:"_id"`
-	} `json:"followers"`
+	ID bson.ObjectId `bson:"_id" json:"_id"`
+} `json:"followers"`
 	Following []struct {
-		ID bson.ObjectId `bson:"_id" json:"_id"`
-	} `json:"following"`
+	ID bson.ObjectId `bson:"_id" json:"_id"`
+} `json:"following"`
 	Interviews struct {
-		HardStatus struct {
-			Easy   int64 `bson:"easy" json:"easy"`
-			Hard   int64 `bson:"hard" json:"hard"`
-			Medium int64 `bson:"medium" json:"medium"`
-		} `bson:"hard_status" json:"hard_status"`
-	} `bson:"interviews" json:"interviews"`
+	HardStatus struct {
+	Easy   int64 `bson:"easy" json:"easy"`
+	Hard   int64 `bson:"hard" json:"hard"`
+	Medium int64 `bson:"medium" json:"medium"`
+} `bson:"hard_status" json:"hard_status"`
+} `bson:"interviews" json:"interviews"`
 	Name     string   `bson:"name" json:"name"`
 	Phone    int64    `bson:"phone" json:"phone"`
 	RealName string   `bson:"real_name" json:"real_name"`
 	Skills   []string `bson:"skills" json:"skills"`
 	Star     []struct {
-		Data []struct {
-			ID          bson.ObjectId `bson:"_id" json:"_id"`
-			Title       string        `bson:"title" json:"title"`
-			UpdatedTime time.Time     `bson:"updated_time" json:"updated_time"`
-		} `bson:"data" json:"data"`
-		Name string `bson:"name" json:"name"`
-		Type string `bson:"type" json:"type"`
-	} `bson:"star" json:"star"`
+	Data []struct {
+	ID          bson.ObjectId `bson:"_id" json:"_id"`
+	Title       string        `bson:"title" json:"title"`
+	UpdatedTime time.Time     `bson:"updated_time" json:"updated_time"`
+} `bson:"data" json:"data"`
+	Name string `bson:"name" json:"name"`
+	Type string `bson:"type" json:"type"`
+} `bson:"star" json:"star"`
 	Summary string `bson:"summary" json:"summary"`
 }

@@ -1,12 +1,11 @@
-type Request {
-	Name string `path:"name,options=you|me"`
-}
+syntax = "v1"
 
-type Response {
-	Message string `json:"message"`
-}
+import (
+	"goctl-apis/user.api"
+	"goctl-apis/interviews.api"
+)
 
-service api-api {
-	@handler ApiHandler
-	get /from/:name(Request) returns (Response)
-}
+info(
+	title: "pg-backend"
+	desc: "pg api"
+)

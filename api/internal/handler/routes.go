@@ -4,6 +4,7 @@ package handler
 import (
 	"net/http"
 
+	user "github.com/minibear2333/programmer-go/api/internal/handler/user"
 	"github.com/minibear2333/programmer-go/api/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
@@ -13,10 +14,38 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
 		[]rest.Route{
 			{
+				Method:  http.MethodPost,
+				Path:    "/login",
+				Handler: user.LoginHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodDelete,
+				Path:    "/users/id/:id",
+				Handler: user.DeleteUserHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPut,
+				Path:    "/users/id/:id",
+				Handler: user.UpdateUserHandler(serverCtx),
+			},
+			{
 				Method:  http.MethodGet,
-				Path:    "/from/:name",
-				Handler: ApiHandler(serverCtx),
+				Path:    "/users/id/:id",
+				Handler: user.GetUserHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/users",
+				Handler: user.GetAllUsersHandler(serverCtx),
 			},
 		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/api/v1"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/api/v1"),
 	)
 }

@@ -1,0 +1,11 @@
+syntax = "v1"
+
+
+@server(
+    jwt: Auth
+    group: interviews
+    prefix: api/v1
+)
+
+service interviews {
+}

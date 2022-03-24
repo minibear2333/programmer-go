@@ -2,6 +2,7 @@
   "_id": {
     "$oid": "623600a25c7435dcd65dc289"
   },
+  "open_id": "xxxx",
   "avatar": "https://avatars.githubusercontent.com/u/42294819?v=4",
   "name": "minibear2333",
   "real_name": "",
@@ -61,6 +62,7 @@
   "_id": {
     "$oid": "62369fd85c7435dcd65dc2e9"
   },
+  "open_id": "xxxx",
   "avatar": "https://avatars.githubusercontent.com/u/42294819?v=4",
   "name": "testuser1",
   "real_name": "",

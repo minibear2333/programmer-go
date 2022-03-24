@@ -1,0 +1,58 @@
+syntax = "v1"
+// 登陆
+type reqLogin {
+    ValiCode string `json:"vali_code"`
+}
+type respLogin {
+    Token string `json:"token"`
+}
+
+// 用户操作
+type reqUserId {
+    Id int64 `path:"id"`
+}
+
+type user {
+    Avatar string `json:"avatar,optional"`
+    Birthday string `json:"birthday,optional"`
+    Blog string `json:"blog,optional"`
+    City string `json:"city,optional"`
+    Email string `json:"email,optional"`
+    Name string `json:"name,optional"`
+    Phone int64 `json:"phone,optional"`
+    RealName string `json:"real_name,optional"`
+    Summary string `json:"summary,optional"`
+}
+
+// 共同类
+type commResp {
+    Ok bool `json:"ok"`
+    Error string `json:"error"`
+}
+
+@server(
+    jwt: Auth
+    group: user
+    prefix: api/v1
+)
+
+service user {
+    @handler Login
+    post /login (reqLogin) returns (respLogin)
+
+    // 不需要增加用户接口，登陆自动增加
+    //    @handler AddUser
+    //    post /users (reqUser) returns (commResp)
+
+    @handler DeleteUser
+    delete /users/id/:id (reqUserId) returns (commResp)
+
+    @handler UpdateUser
+    put /users/id/:id (user) returns (commResp)
+
+    @handler GetUser
+    get /users/id/:id (reqUserId) returns (user)
+
+    @handler GetAllUsers
+    get /users returns ([]user)
+}
