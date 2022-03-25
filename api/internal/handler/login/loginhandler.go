@@ -1,9 +1,9 @@
-package user
+package login
 
 import (
 	"net/http"
 
-	"github.com/minibear2333/programmer-go/api/internal/logic/user"
+	"github.com/minibear2333/programmer-go/api/internal/logic/login"
 	"github.com/minibear2333/programmer-go/api/internal/svc"
 	"github.com/minibear2333/programmer-go/api/internal/types"
 	"github.com/zeromicro/go-zero/rest/httpx"
@@ -17,7 +17,7 @@ func LoginHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			return
 		}
 
-		l := user.NewLoginLogic(r.Context(), svcCtx)
+		l := login.NewLoginLogic(r.Context(), svcCtx)
 		resp, err := l.Login(req)
 		if err != nil {
 			httpx.Error(w, err)

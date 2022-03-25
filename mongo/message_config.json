@@ -1,0 +1,16 @@
+[{
+  "_id": {
+    "$oid": "623dcc188fd7a96a78093fc7"
+  },
+  "user_id": {
+    "$oid": "623600a25c7435dcd65dc289"
+  },
+  "comments": true,
+  "follow": true,
+  "good_and_star": true,
+  "mail_notice": {
+    "comments": true,
+    "follow": true,
+    "good_and_star": true
+  }
+}]

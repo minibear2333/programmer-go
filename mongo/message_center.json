@@ -1,0 +1,19 @@
+[{
+  "_id": {
+    "$oid": "623dc7298fd7a96a78093fc4"
+  },
+  "type": 1,
+  "user": {
+    "_id": {
+      "$oid": "623600a25c7435dcd65dc289"
+    },
+    "name": "minibear2333",
+    "avatar": "https://avatars.githubusercontent.com/u/42294819?v=4",
+    "action": "收藏了你的博客/回复了你的评论/点赞了你的博客,只有系统通知这里为空"
+  },
+  "title": "这里可以带链接，跳转到新界面的html,可以是评论内容也可以是信息提示，需要加粗的部分",
+  "content": "通过xxx关注了你/系统通知xxx",
+  "created_time": {
+    "$date": "2022-03-25T16:25:00Z"
+  }
+}]

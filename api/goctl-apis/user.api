@@ -20,7 +20,7 @@ type user {
 }
 
 // 共同类
-type commResp {
+type commUserResp {
     Ok bool `json:"ok"`
     Error string `json:"error"`
 }
@@ -37,10 +37,10 @@ service pg-backend {
     //    post /users (reqUser) returns (commResp)
 
     @handler DeleteUser
-    delete /users/:_id (reqUserId) returns (commResp)
+    delete /users/:_id (reqUserId) returns (commUserResp)
 
     @handler UpdateUser
-    put /users/:_id (user) returns (commResp)
+    put /users/:_id (user) returns (commUserResp)
 
     @handler GetUser
     get /users/:_id (reqUserId) returns (user)

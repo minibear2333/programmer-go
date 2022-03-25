@@ -3,13 +3,13 @@ syntax = "v1"
 type reqInterviewId {
     ID string `json:"_id"`
 }
-type author {
+type Author {
     ID string `json:"_id"`
     Name string `json:"name"`
 }
 type interview {
     ID string `json:"_id"`
-    Author author `json:"author"`
+    Author Author `json:"author"`
     ClickNum int64 `json:"click_num,default=0"`
     Good int64 `json:"good,default=0"`
     HardStatus string `json:"hard_status"`
@@ -34,7 +34,7 @@ type reqInterviews {
     Search string `json:"search"`
 }
 // 共同类
-type commResp {
+type commInterviewsResp {
     Ok bool `json:"ok"`
     Error string `json:"error"`
 }
@@ -50,7 +50,7 @@ service pg-backend {
     post /interviews (interview_detail) returns (interview_detail)
 
     @handler DeleteInterview
-    delete /interviews/:_id (reqInterviewId) returns (commResp)
+    delete /interviews/:_id (reqInterviewId) returns (commInterviewsResp)
 
     @handler UpdateInterview
     put /interviews/:_id (interview_detail) returns (interview_detail)

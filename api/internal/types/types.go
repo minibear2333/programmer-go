@@ -34,7 +34,7 @@ type User struct {
 	Summary  string `json:"summary,optional"`
 }
 
-type CommResp struct {
+type CommUserResp struct {
 	Ok    bool   `json:"ok"`
 	Error string `json:"error"`
 }
@@ -50,7 +50,7 @@ type Author struct {
 
 type Interview struct {
 	ID          string   `json:"_id"`
-	Author      author   `json:"author"`
+	Author      Author   `json:"author"`
 	ClickNum    int64    `json:"click_num,default=0"`
 	Good        int64    `json:"good,default=0"`
 	HardStatus  string   `json:"hard_status"`
@@ -75,7 +75,7 @@ type ReqInterviews struct {
 	Search string   `json:"search"`
 }
 
-type CommResp struct {
+type CommInterviewsResp struct {
 	Ok    bool   `json:"ok"`
 	Error string `json:"error"`
 }

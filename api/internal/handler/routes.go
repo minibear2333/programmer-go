@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	interviews "github.com/minibear2333/programmer-go/api/internal/handler/interviews"
+	login "github.com/minibear2333/programmer-go/api/internal/handler/login"
 	user "github.com/minibear2333/programmer-go/api/internal/handler/user"
 	"github.com/minibear2333/programmer-go/api/internal/svc"
 
@@ -17,7 +18,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			{
 				Method:  http.MethodPost,
 				Path:    "/login",
-				Handler: user.LoginHandler(serverCtx),
+				Handler: login.LoginHandler(serverCtx),
 			},
 		},
 		rest.WithPrefix("/api/v1"),

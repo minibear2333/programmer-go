@@ -25,7 +25,7 @@ type JwtToken struct {
     RefreshAfter int64  `json:"refresh_after,omitempty"`
 }
 @server(
-    group: user
+    group: login
     prefix: api/v1
 )
 
