@@ -1,6 +1,19 @@
 Name: pg-backend
 Host: 0.0.0.0
 Port: 80
-Auth:
-  AccessSecret: ${JWT_SECRET}
-  AccessExpire: 86400
+AccessSecret: 3f7ebed7-bc13-42f4-afc3-da4f8a1bcf9a
+AccessExpire: 86400
+
+Redis:
+  db: 0
+  addr: localhost:6379
+  password: ""
+zap:
+  level: info
+  format: console
+  prefix: '[programmer-go/server]'
+  director: log
+  showLine: true
+  encode-level: LowercaseColorLevelEncoder
+  stacktrace-key: stacktrace
+  log-in-console: true

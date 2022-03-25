@@ -47,7 +47,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: user.GetAllUsersHandler(serverCtx),
 			},
 		},
-		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithJwt(serverCtx.Config.AccessSecret),
 		rest.WithPrefix("/api/v1"),
 	)
 
@@ -79,7 +79,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: interviews.GetAllInterviewHandler(serverCtx),
 			},
 		},
-		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithJwt(serverCtx.Config.AccessSecret),
 		rest.WithPrefix("/api/v1"),
 	)
 }
