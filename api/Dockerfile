@@ -13,7 +13,7 @@ ADD go.sum .
 RUN go mod download
 COPY . .
 COPY ./etc /app/etc
-RUN go build -ldflags="-s -w" -o /app/api ./api.go
+RUN go build -ldflags="-s -w" -o /app/pg-backend ./pg-backend.go
 
 
 FROM alpine
@@ -22,7 +22,9 @@ RUN apk update --no-cache && apk add --no-cache ca-certificates tzdata
 ENV TZ Asia/Shanghai
 
 WORKDIR /app
-COPY --from=builder /app/api /app/api
+COPY --from=builder /app/pg-backend /app/pg-backend
 COPY --from=builder /app/etc /app/etc
 
-CMD ["./api", "-f", "etc/api-api.yaml"]
+EXPOSE 80
+
+CMD ["./pg-backend", "-f", "etc/pg-backend.yaml"]

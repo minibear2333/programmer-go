@@ -1,18 +1,13 @@
 syntax = "v1"
-// 登陆
-type reqLogin {
-    ValiCode string `json:"vali_code"`
-}
-type respLogin {
-    Token string `json:"token"`
-}
+
 
 // 用户操作
 type reqUserId {
-    Id int64 `path:"id"`
+    ID string `path:"_id"`
 }
 
 type user {
+    ID string `json:"_id"`
     Avatar string `json:"avatar,optional"`
     Birthday string `json:"birthday,optional"`
     Blog string `json:"blog,optional"`
@@ -36,22 +31,19 @@ type commResp {
     prefix: api/v1
 )
 
-service user {
-    @handler Login
-    post /login (reqLogin) returns (respLogin)
-
+service pg-backend {
     // 不需要增加用户接口，登陆自动增加
     //    @handler AddUser
     //    post /users (reqUser) returns (commResp)
 
     @handler DeleteUser
-    delete /users/id/:id (reqUserId) returns (commResp)
+    delete /users/:_id (reqUserId) returns (commResp)
 
     @handler UpdateUser
-    put /users/id/:id (user) returns (commResp)
+    put /users/:_id (user) returns (commResp)
 
     @handler GetUser
-    get /users/id/:id (reqUserId) returns (user)
+    get /users/:_id (reqUserId) returns (user)
 
     @handler GetAllUsers
     get /users returns ([]user)

@@ -4,6 +4,7 @@ package handler
 import (
 	"net/http"
 
+	interviews "github.com/minibear2333/programmer-go/api/internal/handler/interviews"
 	user "github.com/minibear2333/programmer-go/api/internal/handler/user"
 	"github.com/minibear2333/programmer-go/api/internal/svc"
 
@@ -18,19 +19,25 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/login",
 				Handler: user.LoginHandler(serverCtx),
 			},
+		},
+		rest.WithPrefix("/api/v1"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
 			{
 				Method:  http.MethodDelete,
-				Path:    "/users/id/:id",
+				Path:    "/users/:_id",
 				Handler: user.DeleteUserHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPut,
-				Path:    "/users/id/:id",
+				Path:    "/users/:_id",
 				Handler: user.UpdateUserHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodGet,
-				Path:    "/users/id/:id",
+				Path:    "/users/:_id",
 				Handler: user.GetUserHandler(serverCtx),
 			},
 			{
@@ -44,7 +51,33 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	)
 
 	server.AddRoutes(
-		[]rest.Route{},
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/interviews",
+				Handler: interviews.AddInterviewHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodDelete,
+				Path:    "/interviews/:_id",
+				Handler: interviews.DeleteInterviewHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPut,
+				Path:    "/interviews/:_id",
+				Handler: interviews.UpdateInterviewHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/interviews/:_id",
+				Handler: interviews.GetInterviewHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/interviews",
+				Handler: interviews.GetAllInterviewHandler(serverCtx),
+			},
+		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 		rest.WithPrefix("/api/v1"),
 	)

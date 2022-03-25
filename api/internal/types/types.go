@@ -6,14 +6,23 @@ type ReqLogin struct {
 }
 
 type RespLogin struct {
-	Token string `json:"token"`
+	ID   string `json:"_id"`
+	Name string `json:"name"`
+	JwtToken
+}
+
+type JwtToken struct {
+	AccessToken  string `json:"access_token,omitempty"`
+	AccessExpire int64  `json:"access_expire,omitempty"`
+	RefreshAfter int64  `json:"refresh_after,omitempty"`
 }
 
 type ReqUserId struct {
-	Id int64 `path:"id"`
+	ID string `path:"_id"`
 }
 
 type User struct {
+	ID       string `json:"_id"`
 	Avatar   string `json:"avatar,optional"`
 	Birthday string `json:"birthday,optional"`
 	Blog     string `json:"blog,optional"`
@@ -23,6 +32,47 @@ type User struct {
 	Phone    int64  `json:"phone,optional"`
 	RealName string `json:"real_name,optional"`
 	Summary  string `json:"summary,optional"`
+}
+
+type CommResp struct {
+	Ok    bool   `json:"ok"`
+	Error string `json:"error"`
+}
+
+type ReqInterviewId struct {
+	ID string `json:"_id"`
+}
+
+type Author struct {
+	ID   string `json:"_id"`
+	Name string `json:"name"`
+}
+
+type Interview struct {
+	ID          string   `json:"_id"`
+	Author      author   `json:"author"`
+	ClickNum    int64    `json:"click_num,default=0"`
+	Good        int64    `json:"good,default=0"`
+	HardStatus  string   `json:"hard_status"`
+	HotNum      int64    `json:"hot_num,default=0"`
+	Summary     string   `json:"summary"`
+	Tags        []string `json:"tags"`
+	Title       string   `json:"title"`
+	UpdatedTime string   `json:"updated_time"`
+	Status      bool     `json:"status"`
+}
+
+type Interview_detail struct {
+	Interview
+	StarNum     int64  `json:"star_num,default=0"`
+	Bad         int64  `json:"bad,default=0"`
+	Content     string `json:"content"`
+	CreatedTime string `json:"created_time"`
+}
+
+type ReqInterviews struct {
+	Tags   []string `json:"tags"`
+	Search string   `json:"search"`
 }
 
 type CommResp struct {

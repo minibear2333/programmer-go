@@ -1,0 +1,35 @@
+syntax = "v1"
+
+info(
+    title: "type title here"
+    desc: "type desc here"
+    author: "type author here"
+    email: "type email here"
+    version: "type version here"
+)
+
+// 登陆
+type reqLogin {
+    ValiCode string `json:"vali_code"`
+}
+
+type respLogin {
+    ID string `json:"_id"`
+    Name string `json:"name"`
+    JwtToken
+}
+
+type JwtToken struct {
+    AccessToken  string `json:"access_token,omitempty"`
+    AccessExpire int64  `json:"access_expire,omitempty"`
+    RefreshAfter int64  `json:"refresh_after,omitempty"`
+}
+@server(
+    group: user
+    prefix: api/v1
+)
+
+service pg-backend {
+    @handler Login
+    post /login (reqLogin) returns (respLogin)
+}

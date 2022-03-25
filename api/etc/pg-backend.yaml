@@ -1,0 +1,6 @@
+Name: pg-backend
+Host: 0.0.0.0
+Port: 80
+Auth:
+  AccessSecret: ${JWT_SECRET}
+  AccessExpire: 86400
