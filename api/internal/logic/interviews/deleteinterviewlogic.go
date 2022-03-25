@@ -23,7 +23,7 @@ func NewDeleteInterviewLogic(ctx context.Context, svcCtx *svc.ServiceContext) De
 	}
 }
 
-func (l *DeleteInterviewLogic) DeleteInterview(req types.ReqInterviewId) (resp *types.CommResp, err error) {
+func (l *DeleteInterviewLogic) DeleteInterview(req types.ReqInterviewId) (resp *types.CommInterviewsResp, err error) {
 	// todo: add your logic here and delete this line
 
 	return
