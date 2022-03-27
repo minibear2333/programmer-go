@@ -12,6 +12,7 @@ type UserModel interface {
 	FindOne(ctx context.Context, id string) (*User, error)
 	Update(ctx context.Context, data *User) error
 	Delete(ctx context.Context, id string) error
+	FindOneByOpenId(ctx context.Context, openId string) (*User, error)
 }
 
 type defaultUserModel struct {
@@ -82,4 +83,25 @@ func (m *defaultUserModel) Delete(ctx context.Context, id string) error {
 	defer m.PutSession(session)
 
 	return m.GetCollection(session).RemoveId(bson.ObjectIdHex(id))
+}
+
+func (m *defaultUserModel) FindOneByOpenId(ctx context.Context, openId string) (*User, error) {
+	session, err := m.TakeSession()
+	if err != nil {
+		return nil, err
+	}
+
+	defer m.PutSession(session)
+	var data User
+
+	filter := bson.D{{"open_id", openId}}
+	err = m.GetCollection(session).Find(filter).One(&data)
+	switch err {
+	case nil:
+		return &data, nil
+	case mongo.ErrNotFound:
+		return nil, ErrNotFound
+	default:
+		return nil, err
+	}
 }

@@ -12,7 +12,7 @@ type CustomClaims struct {
 }
 
 type BaseClaims struct {
-	ID       uint
+	ID       string
 	Username string
 }
 
@@ -26,7 +26,7 @@ func (j *JWT) CreateClaims(baseClaims BaseClaims) CustomClaims {
 		BaseClaims: baseClaims,
 		// TODO 缓冲令牌
 		StandardClaims: jwt.StandardClaims{
-			NotBefore: time.Now().Unix() - 1000,                       // 签名生效时间
+			NotBefore: time.Now().Unix() - 1000,                 // 签名生效时间
 			ExpiresAt: time.Now().Unix() + authCfg.AccessExpire, // 过期时间 7天  配置文件
 		},
 	}
