@@ -4,8 +4,7 @@ import "github.com/zeromicro/go-zero/rest"
 
 type Config struct {
 	rest.RestConf
-	AccessSecret string // 签名
-	AccessExpire int64  // 过期时间
-	Zap          Zap    `yaml:"Zap"`
-	Redis        Redis  `yaml:"Redis"`
+	Auth  JWT	`json:"Auth" yaml:"Auth"`
+	Zap   Zap   `json:"Zap" yaml:"Zap"`
+	Redis Redis `json:"Redis" yaml:"Redis"`
 }

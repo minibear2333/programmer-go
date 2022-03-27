@@ -38,7 +38,7 @@ func (l *LoginLogic) Login(req types.ReqLogin) (resp *types.RespLogin, err error
 	// 登录逻辑
 
 	// 颁发 Token
-	j := &utils.JWT{SigningKey: []byte(global.CONFIG.AccessSecret)}
+	j := &utils.JWT{SigningKey: []byte(global.CONFIG.Auth.AccessSecret)}
 	claims := j.CreateClaims(utils.BaseClaims{
 		ID:       1,
 		Username: "玮子",

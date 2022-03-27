@@ -26,5 +26,6 @@ COPY --from=builder /app/pg-backend /app/pg-backend
 COPY --from=builder /app/etc /app/etc
 
 EXPOSE 80
+EXPOSE 9091
 
 CMD ["./pg-backend", "-f", "etc/pg-backend.yaml"]
