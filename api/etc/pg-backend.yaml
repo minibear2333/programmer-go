@@ -21,3 +21,5 @@ Prometheus:
     Host: 0.0.0.0
     Port: 9091
     Path: /metrics
+Mongo:
+  Addr: mongodb://<user>:<password>@<hosts>?replicaSet=<rs>&authSource=admin&ssl=true

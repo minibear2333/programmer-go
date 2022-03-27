@@ -34,6 +34,10 @@ mongo的json文件放在 mongo 目录下
 
 参考：[mongo生成model](https://pkg.go.dev/git.i2edu.net/i2/go-zero/tools/goctl/model/mongo#section-readme)
 
+### 加密环境
+
+含有密码文件放到 `etc/.pg-backend.yaml` 文件中了，并加了忽略提交，正式上线时，将会切换为环境变量的形式。
+
 ### 其他
 
 开发文档参考 [go-zero项目开发](https://go-zero.dev/cn/project-dev.html)
