@@ -1,7 +1,8 @@
 syntax = "v1"
 
 type reqInterviewId {
-    ID string `json:"_id"`
+    ID string `path:"_id"`
+    UserID string `json:"user_id"`
 }
 type Author {
     ID string `json:"_id"`
@@ -17,7 +18,7 @@ type interview {
     Summary string `json:"summary"`
     Tags []string `json:"tags"`
     Title string `json:"title"`
-    UpdatedTime string `json:"updated_time"`
+    UpdatedTime int64 `json:"updated_time"`
     //    是否当前用户已提交评论，程序查询当前用户id是否在comments列表内
     Status bool `json:"status"`
     //Comments []string `json:"comments"`
@@ -27,7 +28,7 @@ type interview_detail {
     StarNum int64 `json:"star_num,default=0"`
     Bad int64 `json:"bad,default=0"`
     Content string `json:"content"`
-    CreatedTime string `json:"created_time"`
+    CreatedTime int64 `json:"created_time"`
 }
 type reqInterviews {
     Tags []string `json:"tags"`
@@ -42,7 +43,7 @@ type commInterviewsResp {
 @server(
     jwt: Auth
     group: interviews
-    prefix: api/v1
+    prefix: v1/api
 )
 
 service pg-backend {
