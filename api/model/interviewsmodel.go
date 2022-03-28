@@ -2,6 +2,7 @@ package model
 
 import (
 	"context"
+	"fmt"
 	"github.com/globalsign/mgo/bson"
 	"github.com/zeromicro/go-zero/core/stores/mongo"
 )
@@ -71,17 +72,14 @@ func (m *defaultInterviewsModel) FindByTagsAndSearchWord(ctx context.Context, ta
 	defer m.PutSession(session)
 	var data []Interviews
 	filter := bson.M{
-		//	"title": bson.M{"$regex": bson.RegEx{
-		//	//Pattern: fmt.Sprintf("/%s/", search),
-		//	Pattern: "面",
-		//	Options: "im",
-		//}}
-	}
+		"title": bson.M{"$regex": bson.RegEx{
+			Pattern: fmt.Sprintf("%s", search),
+			Options: "im",
+		}}}
 	if tags != nil && len(tags) > 0 {
 		filter["tags"] = tags
 	}
-	//d := bson.M{}
-	err = m.GetCollection(session).Find(bson.M{"title": "面经标题"}).All(&data)
+	err = m.GetCollection(session).Find(filter).All(&data)
 	switch err {
 	case nil:
 		return &data, nil
