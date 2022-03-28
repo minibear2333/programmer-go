@@ -28,7 +28,7 @@ type commUserResp {
 @server(
     jwt: Auth
     group: user
-    prefix: api/v1
+    prefix: v1/api
 )
 
 service pg-backend {
