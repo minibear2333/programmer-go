@@ -37,7 +37,7 @@ type Interviews struct {
 	Author struct {
 		ID   bson.ObjectId `bson:"_id" json:"_id"`
 		Name string        `bson:"name" json:"name"`
-	} `json:"author"`
+	} `bson:"author" json:"author"`
 	Content string `bson:"content" json:"content"`
 	Bad      int64 `bson:"bad" json:"bad"`
 	ClickNum int64 `bson:"click_num" json:"click_num"`
