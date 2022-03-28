@@ -40,7 +40,7 @@ type CommUserResp struct {
 }
 
 type ReqInterviewId struct {
-	ID string `path:"_id"`
+	ID     string `path:"_id"`
 	UserID string `json:"user_id"`
 }
 
@@ -59,8 +59,8 @@ type Interview struct {
 	Summary     string   `json:"summary"`
 	Tags        []string `json:"tags"`
 	Title       string   `json:"title"`
-	UpdatedTime int64   `json:"updated_time"`
-	Status      bool     `json:"status"`
+	UpdatedTime int64 `json:"updated_time"`
+	Status      bool     `json:"status,default=false"`
 }
 
 type Interview_detail struct {
@@ -71,10 +71,19 @@ type Interview_detail struct {
 	CreatedTime int64 `json:"created_time"`
 }
 
+type ReqInterviewAdd struct {
+	Author      Author   `json:"author"`
+	HardStatus  string   `json:"hard_status"`
+	Summary     string   `json:"summary,omitempty"`
+	Tags        []string `json:"tags"`
+	Title       string   `json:"title"`
+	Content     string `json:"content"`
+}
+
 type ReqInterviews struct {
 	Tags   []string `json:"tags"`
 	Search string   `json:"search"`
-	UserID string `json:"user_id"`
+	UserID string   `json:"user_id"`
 }
 
 type CommInterviewsResp struct {
