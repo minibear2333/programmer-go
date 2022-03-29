@@ -43,11 +43,17 @@ type reqInterviewAdd struct {
 type reqInterviews {
     Tags []string `json:"tags"`
     Search string `json:"search"`
+    UserID string   `json:"user_id"`
+    commonPage
 }
 // 共同类
 type commInterviewsResp {
     Ok bool `json:"ok"`
     Error string `json:"error"`
+
+type commonPage {
+    PageNo   int `json:"page_no"`
+    PageSize int `json:"page_size"`
 }
 
 @server(

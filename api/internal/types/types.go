@@ -84,9 +84,15 @@ type ReqInterviews struct {
 	Tags   []string `json:"tags"`
 	Search string   `json:"search"`
 	UserID string   `json:"user_id"`
+	CommonPage
 }
 
 type CommInterviewsResp struct {
 	Ok    bool   `json:"ok"`
 	Error string `json:"error"`
+}
+
+type CommonPage struct {
+	PageNo   int `json:"page_no"`
+	PageSize int `json:"page_size"`
 }
