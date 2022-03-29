@@ -6,8 +6,8 @@ Auth:
   AccessExpire: 86400
 Redis:
   DB: 0
-  Addr: localhost:6379
-  Password: ""
+  Addr: pg-redis:6379
+  Password: "1234567890"
 Zap:
   level: info
   format: console
@@ -22,4 +22,4 @@ Prometheus:
     Port: 9091
     Path: /metrics
 Mongo:
-  Addr: mongodb://<user>:<password>@<hosts>?replicaSet=<rs>&authSource=admin&ssl=true
+  Addr: mongodb://root:example@pg-mongo:27017/pg?authSource=admin&ssl=true

@@ -1,0 +1,32 @@
+version: "2"
+services:
+  pg-backend:
+    image: pg-backend:v1
+    container_name: pg-backend
+    restart: on-failure
+    ports:
+      - "80:80"
+      - "9091:9091"
+    depends_on:
+      - redis
+    volumes:
+      - ./logs:/
+
+  redis:
+    image: redis:latest
+    container_name: pg-redis
+    restart: on-failure
+    ports:
+      - "6379:6379"
+    command: redis-server --requirepass 1234567890 --port 6379
+
+  mongo:
+    image: mongo:latest
+    container_name: pg-mongo
+    restart: on-failure
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: pg
