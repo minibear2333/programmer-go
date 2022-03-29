@@ -2,13 +2,14 @@ package interviews
 
 import (
 	"context"
-	"github.com/minibear2333/programmer-go/api/global"
-	"go.uber.org/zap"
+	"errors"
 
+	"github.com/minibear2333/programmer-go/api/global"
 	"github.com/minibear2333/programmer-go/api/internal/svc"
 	"github.com/minibear2333/programmer-go/api/internal/types"
 
 	"github.com/zeromicro/go-zero/core/logx"
+	"go.uber.org/zap"
 )
 
 type GetAllInterviewLogic struct {
@@ -26,11 +27,20 @@ func NewGetAllInterviewLogic(ctx context.Context, svcCtx *svc.ServiceContext) Ge
 }
 
 func (l *GetAllInterviewLogic) GetAllInterview(req types.ReqInterviews) (resp []types.Interview, err error) {
-	interviews, err := global.Mongo.InterviewsModel.FindByTagsAndSearchWord(context.TODO(), req.Tags, req.Search)
+	if req.CommonPage.PageSize < 1 || req.CommonPage.PageSize > 50 {
+		return nil, errors.New("分页大小不合法")
+	}
+	if req.CommonPage.PageNo < 1 {
+		return nil, errors.New("页码不合法")
+	}
+
+	interviews, err := global.Mongo.InterviewsModel.FindByTagsAndSearchWord(context.TODO(), req.Tags, req.Search, req.CommonPage)
 	if err != nil {
 		global.LOG.Error("根据标签和关键字获取面试题列表失败", zap.Error(err))
 		return nil, err
 	}
+
+	resp = []types.Interview{}
 	for _, interview := range *interviews {
 		status := false
 		for _, v := range interview.Comments {
@@ -56,5 +66,6 @@ func (l *GetAllInterviewLogic) GetAllInterview(req types.ReqInterviews) (resp []
 		}
 		resp = append(resp, tmp)
 	}
+
 	return resp, nil
 }
