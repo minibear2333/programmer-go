@@ -24,6 +24,18 @@ cd api
 go mod tidy
 ```
 
+### 接口文档
+
+接口使用了jwt验证，直接调用会401报错，可以在redis里先插入一条记录，然后就可以直接用文档里的接口了，如果过期了，那么调用下login接口再生成一个
+
+```shell
+HMSET "c7cec5" "openid" "aROD9s357bclJK9eLwXrGfMsuvZm"
+```
+
+* [面试题接口](https://documenter.getpostman.com/view/18714614/UVyoXyKn)
+* [登陆接口](https://documenter.getpostman.com/view/18714614/UVyoXyKo)
+
+
 ### 开发流程
 
 * goctl环境准备
