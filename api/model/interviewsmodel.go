@@ -3,6 +3,9 @@ package model
 import (
 	"context"
 	"fmt"
+
+	"github.com/minibear2333/programmer-go/api/internal/types"
+
 	"github.com/globalsign/mgo/bson"
 	"github.com/zeromicro/go-zero/core/stores/mongo"
 )
@@ -10,7 +13,7 @@ import (
 type InterviewsModel interface {
 	Insert(ctx context.Context, data *Interviews) error
 	FindOne(ctx context.Context, id string) (*Interviews, error)
-	FindByTagsAndSearchWord(ctx context.Context, tags []string, search string) (*[]Interviews, error)
+	FindByTagsAndSearchWord(ctx context.Context, tags []string, search string, page types.CommonPage) (*[]Interviews, error)
 	Update(ctx context.Context, data *Interviews) error
 	Delete(ctx context.Context, id string) error
 }
@@ -63,7 +66,7 @@ func (m *defaultInterviewsModel) FindOne(ctx context.Context, id string) (*Inter
 	}
 }
 
-func (m *defaultInterviewsModel) FindByTagsAndSearchWord(ctx context.Context, tags []string, search string) (*[]Interviews, error) {
+func (m *defaultInterviewsModel) FindByTagsAndSearchWord(ctx context.Context, tags []string, search string, page types.CommonPage) (*[]Interviews, error) {
 	session, err := m.TakeSession()
 	if err != nil {
 		return nil, err
@@ -79,7 +82,18 @@ func (m *defaultInterviewsModel) FindByTagsAndSearchWord(ctx context.Context, ta
 	if tags != nil && len(tags) > 0 {
 		filter["tags"] = tags
 	}
-	err = m.GetCollection(session).Find(filter).All(&data)
+
+	count, err := m.GetCollection(session).Find(filter).Count()
+	if err != nil {
+		return nil, err
+	}
+
+	if count < page.PageNo {
+		return &data, nil
+	}
+
+	skipNum := (page.PageNo - 1) * page.PageSize
+	err = m.GetCollection(session).Find(filter).Skip(skipNum).Limit(page.PageSize).All(&data)
 	switch err {
 	case nil:
 		return &data, nil
