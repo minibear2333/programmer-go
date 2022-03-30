@@ -31,6 +31,10 @@ type interview_detail {
     CreatedTime int64 `json:"created_time,omitempty"`
 }
 
+type reqUpdateInterview{
+
+}
+
 type reqInterviewAdd struct {
     Author      Author   `json:"author"`
     HardStatus  string   `json:"hard_status"`
@@ -50,6 +54,7 @@ type reqInterviews {
 type commInterviewsResp {
     Ok bool `json:"ok"`
     Error string `json:"error"`
+}
 
 type commonPage {
     PageNo   int `json:"page_no"`

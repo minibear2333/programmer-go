@@ -30,16 +30,18 @@ func (l *GetInterviewLogic) GetInterview(req types.ReqInterviewId) (resp *types.
 		global.LOG.Error("根据ID获取面试题失败", zap.Error(err))
 		return nil, err
 	}
+	userID := l.ctx.Value("ID")
+
 	status := false
-	for _,v := range interview.Comments{
-		if v.ID.Hex() == req.UserID{
+	for _, v := range interview.Comments {
+		if v.ID.Hex() == userID.(string) {
 			status = true
 		}
 	}
 	return &types.Interview_detail{
 		Interview: types.Interview{
-			ID:          interview.ID.Hex(),
-			Author:      types.Author{
+			ID: interview.ID.Hex(),
+			Author: types.Author{
 				ID:   interview.Author.ID.Hex(),
 				Name: interview.Author.Name,
 			},

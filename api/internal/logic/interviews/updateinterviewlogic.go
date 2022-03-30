@@ -37,16 +37,12 @@ func (l *UpdateInterviewLogic) UpdateInterview(req types.Interview_detail) (resp
 		global.LOG.Error("面试题目id识别错误")
 		return nil, err
 	}
-	if !bson.IsObjectIdHex(req.Author.ID) {
-		err = errors.New("作者识别错误")
-		global.LOG.Error("作者id解析出错")
-		return nil, err
-	}
+	// TODO 权限控制，不允许修改非自己的数据
 	interview := model.Interviews{
 		ID: bson.ObjectIdHex(req.ID),
 		Author: model.Author{
-			ID:   bson.ObjectIdHex(req.Author.ID),
-			Name: req.Author.Name,
+			ID:   bson.ObjectIdHex(l.ctx.Value("ID").(string)),
+			Name: l.ctx.Value("Username").(string),
 		},
 		Content:     req.Content,
 		Bad:         req.Bad,

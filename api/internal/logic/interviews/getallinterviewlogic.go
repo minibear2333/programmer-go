@@ -39,12 +39,13 @@ func (l *GetAllInterviewLogic) GetAllInterview(req types.ReqInterviews) (resp []
 		global.LOG.Error("根据标签和关键字获取面试题列表失败", zap.Error(err))
 		return nil, err
 	}
+	userID := l.ctx.Value("ID")
 
 	resp = []types.Interview{}
 	for _, interview := range *interviews {
 		status := false
 		for _, v := range interview.Comments {
-			if v.ID.Hex() == req.UserID {
+			if v.ID.Hex() == userID.(string) {
 				status = true
 			}
 		}

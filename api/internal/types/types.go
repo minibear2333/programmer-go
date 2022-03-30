@@ -41,7 +41,6 @@ type CommUserResp struct {
 
 type ReqInterviewId struct {
 	ID     string `path:"_id"`
-	UserID string `json:"user_id"`
 }
 
 type Author struct {
@@ -72,7 +71,6 @@ type Interview_detail struct {
 }
 
 type ReqInterviewAdd struct {
-	Author      Author   `json:"author"`
 	HardStatus  string   `json:"hard_status"`
 	Summary     string   `json:"summary,omitempty"`
 	Tags        []string `json:"tags"`
@@ -83,7 +81,6 @@ type ReqInterviewAdd struct {
 type ReqInterviews struct {
 	Tags   []string `json:"tags"`
 	Search string   `json:"search"`
-	UserID string   `json:"user_id"`
 	CommonPage
 }
 
