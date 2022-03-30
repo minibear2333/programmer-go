@@ -17,11 +17,11 @@ services:
     container_name: pg-redis
     restart: on-failure
     ports:
-      - "6379:6379"
-    command: redis-server --requirepass 1234567890 --port 6379
+      - "16379:16379"
+    command: redis-server --requirepass 1234567890 --port 16379
 
   mongo:
-    image: mongo:latest
+    image: mongo:4.4.13
     container_name: pg-mongo
     restart: on-failure
     ports:
@@ -29,4 +29,5 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
-      MONGO_INITDB_DATABASE: pg
+    volumes:
+      - ../mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro

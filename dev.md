@@ -13,8 +13,8 @@ docker-compose up -d redis mongo
 写入hosts文件，如果是`win`环境请手动写入
 
 ```shell
-echo pg-redis 127.0.0.1 >> /etc/hosts
-echo pg-mongo 127.0.0.1 >> /etc/hosts
+echo 127.0.0.1 pg-redis >> /etc/hosts
+echo 127.0.0.1 pg-mongo >> /etc/hosts
 ```
 
 运行项目，可以用任何`ide`运行，使用的`go mod`的模式，本地下载包
