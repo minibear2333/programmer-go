@@ -5,7 +5,9 @@
 
 前端位于 [programmer-go-front](https://github.com/Sakura-echos/programmer-go-front)
 
-## Dev
+## 如何贡献
+
+非常感谢您的贡献，开发环境与运行方式、代码目录结构请参考 [dev.md](dev.md)
 
 建议安装`git commit`提交规范辅助工具
 
@@ -17,11 +19,13 @@ npm install -g conventional-changelog-cli
 
 使用 `git cz` 进行提交
 
+## Authors&Contributors
 
-## Authors
+感谢技术大拿们的倾力贡献！
 
 - [@minibear2333](https://github.com/minibear2333)
 - [@gong-guowei](https://github.com/guowei-gong)
+- [@kurumii](https://github.com/kurumii)
 - 其余贡献者请自行补充
 
 
