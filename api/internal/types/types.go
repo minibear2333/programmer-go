@@ -70,6 +70,15 @@ type Interview_detail struct {
 	CreatedTime int64  `json:"created_time,omitempty"`
 }
 
+type ReqInterviewUpdate struct {
+	ID         string   `path:"_id"`
+	HardStatus *string  `json:"hard_status,optional"`
+	Summary    *string  `json:"summary,optional"`
+	Tags       []string `json:"tags,optional"`
+	Title      *string  `json:"title,optional"`
+	Content    *string  `json:"content,optional"`
+}
+
 type ReqInterviewAdd struct {
 	HardStatus string   `json:"hard_status"`
 	Summary    string   `json:"summary,omitempty"`
