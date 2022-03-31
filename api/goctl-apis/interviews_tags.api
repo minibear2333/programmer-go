@@ -1,0 +1,18 @@
+syntax = "v1"
+
+type respInterviewsTags struct {
+    ID string `json:"_id"`
+    Name string `json:"name"`
+    SubTags []string `json:"sub_tags"`
+}
+
+@server(
+    jwt: Auth
+    group: interviews_tags
+    prefix: v1/api
+)
+
+service pg-backend {
+    @handler GetAllInterviewTags
+    get /interviews_tags returns ([]respInterviewsTags)
+}

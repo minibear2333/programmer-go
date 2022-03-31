@@ -40,7 +40,7 @@ type CommUserResp struct {
 }
 
 type ReqInterviewId struct {
-	ID     string `path:"_id"`
+	ID string `path:"_id"`
 }
 
 type Author struct {
@@ -58,7 +58,7 @@ type Interview struct {
 	Summary     string   `json:"summary"`
 	Tags        []string `json:"tags"`
 	Title       string   `json:"title"`
-	UpdatedTime int64 `json:"updated_time"`
+	UpdatedTime int64    `json:"updated_time"`
 	Status      bool     `json:"status,default=false"`
 }
 
@@ -67,15 +67,15 @@ type Interview_detail struct {
 	StarNum     int64  `json:"star_num,default=0"`
 	Bad         int64  `json:"bad,default=0"`
 	Content     string `json:"content"`
-	CreatedTime int64 `json:"created_time"`
+	CreatedTime int64  `json:"created_time,omitempty"`
 }
 
 type ReqInterviewAdd struct {
-	HardStatus  string   `json:"hard_status"`
-	Summary     string   `json:"summary,omitempty"`
-	Tags        []string `json:"tags"`
-	Title       string   `json:"title"`
-	Content     string `json:"content"`
+	HardStatus string   `json:"hard_status"`
+	Summary    string   `json:"summary,omitempty"`
+	Tags       []string `json:"tags"`
+	Title      string   `json:"title"`
+	Content    string   `json:"content"`
 }
 
 type ReqInterviews struct {
@@ -92,4 +92,10 @@ type CommInterviewsResp struct {
 type CommonPage struct {
 	PageNo   int `json:"page_no"`
 	PageSize int `json:"page_size"`
+}
+
+type RespInterviewsTags struct {
+	ID      string   `json:"_id"`
+	Name    string   `json:"name"`
+	SubTags []string `json:"sub_tags"`
 }

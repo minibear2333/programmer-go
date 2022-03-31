@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	interviews "github.com/minibear2333/programmer-go/api/internal/handler/interviews"
+	interviews_tags "github.com/minibear2333/programmer-go/api/internal/handler/interviews_tags"
 	login "github.com/minibear2333/programmer-go/api/internal/handler/login"
 	user "github.com/minibear2333/programmer-go/api/internal/handler/user"
 	"github.com/minibear2333/programmer-go/api/internal/svc"
@@ -77,6 +78,18 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodGet,
 				Path:    "/interviews",
 				Handler: interviews.GetAllInterviewHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/v1/api"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodGet,
+				Path:    "/interviews_tags",
+				Handler: interviews_tags.GetAllInterviewTagsHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),

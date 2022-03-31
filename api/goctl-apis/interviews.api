@@ -2,14 +2,13 @@ syntax = "v1"
 
 type reqInterviewId {
     ID string `path:"_id"`
-    UserID string `json:"user_id"`
 }
 type Author {
     ID string `json:"_id"`
     Name string `json:"name"`
 }
 type interview {
-    ID string `json:"_id,omitempty"`
+    ID string `json:"_id"`
     Author Author `json:"author"`
     ClickNum int64 `json:"click_num,default=0"`
     Good int64 `json:"good,default=0"`
@@ -18,7 +17,7 @@ type interview {
     Summary string `json:"summary"`
     Tags []string `json:"tags"`
     Title string `json:"title"`
-    UpdatedTime int64 `json:"updated_time,omitempty"`
+    UpdatedTime int64 `json:"updated_time"`
     //    是否当前用户已提交评论，程序查询当前用户id是否在comments列表内
     Status bool `json:"status,default=false"`
     //Comments []string `json:"comments"`
@@ -31,12 +30,7 @@ type interview_detail {
     CreatedTime int64 `json:"created_time,omitempty"`
 }
 
-type reqUpdateInterview{
-
-}
-
 type reqInterviewAdd struct {
-    Author      Author   `json:"author"`
     HardStatus  string   `json:"hard_status"`
     Summary     string   `json:"summary,omitempty"`
     Tags        []string `json:"tags"`
@@ -47,7 +41,6 @@ type reqInterviewAdd struct {
 type reqInterviews {
     Tags []string `json:"tags"`
     Search string `json:"search"`
-    UserID string   `json:"user_id"`
     commonPage
 }
 // 共同类
