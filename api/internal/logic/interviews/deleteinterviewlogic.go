@@ -2,6 +2,7 @@ package interviews
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"github.com/minibear2333/programmer-go/api/global"
 	"github.com/minibear2333/programmer-go/api/internal/svc"
@@ -27,7 +28,17 @@ func NewDeleteInterviewLogic(ctx context.Context, svcCtx *svc.ServiceContext) De
 }
 
 func (l *DeleteInterviewLogic) DeleteInterview(req types.ReqInterviewId) (resp *types.CommInterviewsResp, err error) {
-	err = global.Mongo.InterviewsModel.Delete(context.TODO(), req.ID)
+	interview, err := global.Mongo.InterviewsModel.FindOne(l.ctx, req.ID)
+	if err != nil {
+		global.LOG.Error("根据ID获取面试题失败", zap.Error(err))
+		return nil, err
+	}
+	userID := l.ctx.Value("ID")
+	if interview.Author.ID.Hex() != userID{
+		return nil, errors.New("无权删除该面试题目")
+	}
+
+	err = global.Mongo.InterviewsModel.Delete(l.ctx, req.ID)
 	if err != nil {
 		global.LOG.Error(fmt.Sprintf("删除ID为%s面试题失败", req.ID), zap.Error(err))
 

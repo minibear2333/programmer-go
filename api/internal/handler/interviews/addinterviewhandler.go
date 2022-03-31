@@ -16,7 +16,6 @@ func AddInterviewHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			httpx.Error(w, err)
 			return
 		}
-
 		l := interviews.NewAddInterviewLogic(r.Context(), svcCtx)
 		resp, err := l.AddInterview(req)
 		if err != nil {

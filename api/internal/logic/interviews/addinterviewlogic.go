@@ -2,7 +2,6 @@ package interviews
 
 import (
 	"context"
-	"errors"
 	"github.com/globalsign/mgo/bson"
 	"github.com/minibear2333/programmer-go/api/global"
 	"github.com/minibear2333/programmer-go/api/model"
@@ -30,15 +29,11 @@ func NewAddInterviewLogic(ctx context.Context, svcCtx *svc.ServiceContext) AddIn
 }
 
 func (l *AddInterviewLogic) AddInterview(req types.ReqInterviewAdd) (resp *types.Interview_detail, err error) {
-	if !bson.IsObjectIdHex(req.Author.ID) {
-		err = errors.New("作者识别错误")
-		global.LOG.Error("作者id解析出错")
-		return nil, err
-	}
+	userID,userName := l.ctx.Value("ID"),l.ctx.Value("Username")
 	interview := model.Interviews{
 		Author: model.Author{
-			ID:   bson.ObjectIdHex(req.Author.ID),
-			Name: req.Author.Name,
+			ID:   bson.ObjectIdHex(userID.(string)),
+			Name: userName.(string),
 		},
 		Content:     req.Content,
 		Bad:         0,

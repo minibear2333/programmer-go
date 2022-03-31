@@ -5,7 +5,6 @@ import (
 	"errors"
 	"github.com/globalsign/mgo/bson"
 	"github.com/minibear2333/programmer-go/api/global"
-	"github.com/minibear2333/programmer-go/api/model"
 	"go.uber.org/zap"
 	"time"
 
@@ -30,42 +29,50 @@ func NewUpdateInterviewLogic(ctx context.Context, svcCtx *svc.ServiceContext) Up
 }
 
 // UpdateInterview  这个接口应该抛弃，不应该全量更新
-// TODO 更改为 不能更新created_time、作者的接口，可能需要更改mongo的接口；参数可选传入（需要重新定义req model）
-func (l *UpdateInterviewLogic) UpdateInterview(req types.Interview_detail) (resp *types.Interview_detail, err error) {
+func (l *UpdateInterviewLogic) UpdateInterview(req types.ReqInterviewUpdate) (resp *types.Interview_detail, err error) {
 	if !bson.IsObjectIdHex(req.ID) {
 		err = errors.New("面试题识别错误")
 		global.LOG.Error("面试题目id识别错误")
 		return nil, err
 	}
-	if !bson.IsObjectIdHex(req.Author.ID) {
-		err = errors.New("作者识别错误")
-		global.LOG.Error("作者id解析出错")
+	interview, err := global.Mongo.InterviewsModel.FindOne(l.ctx, req.ID)
+	if err != nil {
+		global.LOG.Error("根据ID获取面试题失败", zap.Error(err))
 		return nil, err
 	}
-	interview := model.Interviews{
-		ID: bson.ObjectIdHex(req.ID),
-		Author: model.Author{
-			ID:   bson.ObjectIdHex(req.Author.ID),
-			Name: req.Author.Name,
-		},
-		Content:     req.Content,
-		Bad:         req.Bad,
-		ClickNum:    req.ClickNum,
-		Comments:    nil,
-		Good:        req.Good,
-		HardStatus:  req.HardStatus,
-		HotNum:      req.HotNum,
-		StarNum:     req.StarNum,
-		Summary:     req.Summary,
-		Tags:        req.Tags,
-		Title:       req.Title,
-		UpdatedTime: time.Now(),
-		CreatedTime: time.Now(),
+	userID := l.ctx.Value("ID")
+	if interview.Author.ID.Hex() != userID{
+		return nil, errors.New("无权更新该面试题目")
 	}
-	err = global.Mongo.InterviewsModel.Update(context.TODO(), &interview)
+
+	interview.UpdatedTime = time.Now()
+	if req.HardStatus!=nil{
+		interview.HardStatus = *req.HardStatus
+	}
+	if req.Summary!=nil{
+		interview.Summary = *req.Summary
+	}
+	if req.Tags!=nil{
+		interview.Tags = req.Tags
+	}
+	if req.Title!=nil{
+		interview.Title = *req.Title
+	}
+	if req.Content !=nil{
+		interview.Title = *req.Content
+	}
+
+	err = global.Mongo.InterviewsModel.Update(l.ctx, interview)
 	if err != nil {
 		global.LOG.Error("更新面试题失败:", zap.Error(err))
 		return nil, err
+	}
+
+	status := false
+	for _, v := range interview.Comments {
+		if v.ID.Hex() == userID.(string) {
+			status = true
+		}
 	}
 	return &types.Interview_detail{
 		Interview: types.Interview{
@@ -82,7 +89,7 @@ func (l *UpdateInterviewLogic) UpdateInterview(req types.Interview_detail) (resp
 			Tags:        interview.Tags,
 			Title:       interview.Title,
 			UpdatedTime: interview.UpdatedTime.Unix(),
-			Status:      false,
+			Status:      status,
 		},
 		StarNum:     interview.StarNum,
 		Bad:         interview.Bad,

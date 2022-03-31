@@ -4,6 +4,7 @@ import (
 	"goctl-apis/login.api"
 	"goctl-apis/user.api"
 	"goctl-apis/interviews.api"
+	"goctl-apis/interviews_tags.api"
 )
 
 info(

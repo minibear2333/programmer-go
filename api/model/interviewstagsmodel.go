@@ -2,7 +2,6 @@ package model
 
 import (
 	"context"
-
 	"github.com/globalsign/mgo/bson"
 	"github.com/zeromicro/go-zero/core/stores/mongo"
 )
@@ -10,6 +9,7 @@ import (
 type InterviewsTagsModel interface {
 	Insert(ctx context.Context, data *InterviewsTags) error
 	FindOne(ctx context.Context, id string) (*InterviewsTags, error)
+	FindAll(ctx context.Context) (*[]InterviewsTags, error)
 	Update(ctx context.Context, data *InterviewsTags) error
 	Delete(ctx context.Context, id string) error
 }
@@ -52,6 +52,26 @@ func (m *defaultInterviewsTagsModel) FindOne(ctx context.Context, id string) (*I
 	var data InterviewsTags
 
 	err = m.GetCollection(session).FindId(bson.ObjectIdHex(id)).One(&data)
+	switch err {
+	case nil:
+		return &data, nil
+	case mongo.ErrNotFound:
+		return nil, ErrNotFound
+	default:
+		return nil, err
+	}
+}
+
+
+func (m *defaultInterviewsTagsModel) FindAll(ctx context.Context) (*[]InterviewsTags, error){
+	session, err := m.TakeSession()
+	if err != nil {
+		return nil, err
+	}
+
+	defer m.PutSession(session)
+	var data []InterviewsTags
+	err = m.GetCollection(session).Find(nil).All(&data)
 	switch err {
 	case nil:
 		return &data, nil
