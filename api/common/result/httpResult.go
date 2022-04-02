@@ -17,16 +17,16 @@ func HttpResult(r *http.Request, w http.ResponseWriter, resp interface{}, err er
 		httpx.WriteJson(w, http.StatusOK, r)
 	} else {
 		// 错误返回
-		errcode := perr.ServerCommonError
-		errmsg := "服务器开小差啦，稍后再来试一试"
+		errCode := perr.ServerCommonError
+		errMsg := "服务器开小差啦，稍后再来试一试"
 
 		causeErr := errors.Cause(err)                // err类型
 		if e, ok := causeErr.(*perr.CodeError); ok { // 自定义错误类型
 			//自定义 CodeError
-			errcode = e.GetErrCode()
-			errmsg = e.GetErrMsg()
+			errCode = e.GetErrCode()
+			errMsg = e.GetErrMsg()
 		}
 		logx.WithContext(r.Context()).Errorf("【API-ERR】 : %+v ", err)
-		httpx.WriteJson(w, http.StatusBadRequest, Error(errcode, errmsg))
+		httpx.WriteJson(w, http.StatusBadRequest, Error(errCode, errMsg))
 	}
 }

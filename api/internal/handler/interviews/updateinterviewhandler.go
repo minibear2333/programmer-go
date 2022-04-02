@@ -1,6 +1,7 @@
 package interviews
 
 import (
+	"github.com/minibear2333/programmer-go/api/common/result"
 	"net/http"
 
 	"github.com/minibear2333/programmer-go/api/internal/logic/interviews"
@@ -19,10 +20,6 @@ func UpdateInterviewHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 
 		l := interviews.NewUpdateInterviewLogic(r.Context(), svcCtx)
 		resp, err := l.UpdateInterview(req)
-		if err != nil {
-			httpx.Error(w, err)
-		} else {
-			httpx.OkJson(w, resp)
-		}
+		result.HttpResult(r, w, resp, err)
 	}
 }

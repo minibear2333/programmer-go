@@ -2,7 +2,9 @@ package interviews_tags
 
 import (
 	"context"
+	"github.com/minibear2333/programmer-go/api/common/perr"
 	"github.com/minibear2333/programmer-go/api/global"
+	"github.com/pkg/errors"
 	"go.uber.org/zap"
 
 	"github.com/minibear2333/programmer-go/api/internal/svc"
@@ -29,7 +31,7 @@ func (l *GetAllInterviewTagsLogic) GetAllInterviewTags() (resp []types.RespInter
 	tags, err := global.Mongo.InterviewsTagsModel.FindAll(l.ctx)
 	if err != nil {
 		global.LOG.Error("获取面试题标签失败", zap.Error(err))
-		return nil, err
+		return nil, errors.Wrapf(perr.NewErrCode(perr.SearchFailError), "logic.getAllInterviewTags fail")
 	}
 
 	for _, tag := range *tags {

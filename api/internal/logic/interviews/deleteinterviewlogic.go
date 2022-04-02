@@ -2,12 +2,12 @@ package interviews
 
 import (
 	"context"
-	"errors"
 	"fmt"
+	"github.com/minibear2333/programmer-go/api/common/perr"
 	"github.com/minibear2333/programmer-go/api/global"
 	"github.com/minibear2333/programmer-go/api/internal/svc"
 	"github.com/minibear2333/programmer-go/api/internal/types"
-	"github.com/minibear2333/programmer-go/api/model"
+	"github.com/pkg/errors"
 	"go.uber.org/zap"
 
 	"github.com/zeromicro/go-zero/core/logx"
@@ -27,36 +27,22 @@ func NewDeleteInterviewLogic(ctx context.Context, svcCtx *svc.ServiceContext) De
 	}
 }
 
-func (l *DeleteInterviewLogic) DeleteInterview(req types.ReqInterviewId) (resp *types.CommInterviewsResp, err error) {
+func (l *DeleteInterviewLogic) DeleteInterview(req types.ReqInterviewId) (res bool,  err error) {
 	interview, err := global.Mongo.InterviewsModel.FindOne(l.ctx, req.ID)
 	if err != nil {
 		global.LOG.Error("根据ID获取面试题失败", zap.Error(err))
-		return nil, err
+		return false, errors.Wrapf(perr.NewErrCode(perr.NotFoundError), "logic.deleteIntervirews not found: %s", req.ID)
 	}
 	userID := l.ctx.Value("ID")
 	if interview.Author.ID.Hex() != userID{
-		return nil, errors.New("无权删除该面试题目")
+		return false, errors.Wrapf(perr.NewErrCode(perr.NotFoundError), "logic.deleteIntervirews not access: userId[%s] interviewId[%s]", userID, req.ID)
 	}
 
 	err = global.Mongo.InterviewsModel.Delete(l.ctx, req.ID)
 	if err != nil {
-		global.LOG.Error(fmt.Sprintf("删除ID为%s面试题失败", req.ID), zap.Error(err))
-
-		if err == model.ErrNotFound {
-			return &types.CommInterviewsResp{
-				Ok:    false,
-				Error: "不存在该面试题",
-			}, nil
-		}
-
-		return &types.CommInterviewsResp{
-			Ok:    false,
-			Error: "删除面试题失败，请稍候重试",
-		}, nil
+		global.LOG.Error(fmt.Sprintf("删除面试题失败:%s", req.ID), zap.Error(err))
+		return false, errors.Wrapf(perr.NewErrCode(perr.OperateFailError), "logic.deleteIntervirews operate fail: interviewId[%s]", userID, req.ID)
 	}
 
-	return &types.CommInterviewsResp{
-		Ok:    true,
-		Error: "",
-	}, nil
+	return true, nil
 }

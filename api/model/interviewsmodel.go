@@ -15,6 +15,7 @@ type InterviewsModel interface {
 	FindOne(ctx context.Context, id string) (*Interviews, error)
 	FindByTagsAndSearchWord(ctx context.Context, tags []string, search string, page types.CommonPage) (*[]Interviews, error)
 	Update(ctx context.Context, data *Interviews) error
+	UpdateFields(ctx context.Context, id string, data *map[string]interface{}) error
 	Delete(ctx context.Context, id string) error
 }
 
@@ -124,4 +125,16 @@ func (m *defaultInterviewsModel) Delete(ctx context.Context, id string) error {
 	defer m.PutSession(session)
 
 	return m.GetCollection(session).RemoveId(bson.ObjectIdHex(id))
+}
+
+func (m *defaultInterviewsModel) UpdateFields(ctx context.Context, id string, data *map[string]interface{}) error {
+	session, err := m.TakeSession()
+	if err != nil {
+		return err
+	}
+
+	defer m.PutSession(session)
+
+	return m.GetCollection(session).Update(bson.M{"_id": bson.ObjectIdHex(id)},
+		bson.M{"$set": data})
 }

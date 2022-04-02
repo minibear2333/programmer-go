@@ -3,6 +3,7 @@ package interviews
 import (
 	"context"
 	"github.com/globalsign/mgo/bson"
+	"github.com/minibear2333/programmer-go/api/common/perr"
 	"github.com/minibear2333/programmer-go/api/global"
 	"github.com/minibear2333/programmer-go/api/model"
 	"go.uber.org/zap"
@@ -52,7 +53,7 @@ func (l *AddInterviewLogic) AddInterview(req types.ReqInterviewAdd) (resp *types
 	err = global.Mongo.InterviewsModel.Insert(context.TODO(), &interview)
 	if err != nil {
 		global.LOG.Error("创建面试题失败", zap.Error(err))
-		return nil, err
+		return nil, perr.NewErrCode(perr.InterviewGenerateError)
 	}
 	return &types.Interview_detail{
 		Interview: types.Interview{
