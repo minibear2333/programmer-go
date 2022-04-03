@@ -42,7 +42,8 @@ type InterviewHardStatus {
 type reqUsers {
     ID string `path:"_id"`
     Search string `json:"search"`
-    commonPage
+    PageNo int `json:"page_no"`
+    PageSize int `json:"page_size"`
 }
 
 type OtherUser {

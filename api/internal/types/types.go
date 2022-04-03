@@ -58,9 +58,10 @@ type InterviewHardStatus struct {
 }
 
 type ReqUsers struct {
-	ID     string `path:"_id"`
-	Search string `json:"search"`
-	CommonPage
+	ID       string `path:"_id"`
+	Search   string `json:"search"`
+	PageNo   int    `json:"page_no"`
+	PageSize int    `json:"page_size"`
 }
 
 type OtherUser struct {
