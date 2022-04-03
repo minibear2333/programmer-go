@@ -21,22 +21,53 @@ type ReqUserId struct {
 	ID string `path:"_id"`
 }
 
-type User struct {
-	ID       string `json:"_id"`
-	Avatar   string `json:"avatar,optional"`
-	Birthday string `json:"birthday,optional"`
-	Blog     string `json:"blog,optional"`
-	City     string `json:"city,optional"`
-	Email    string `json:"email,optional"`
-	Name     string `json:"name,optional"`
-	Phone    int64  `json:"phone,optional"`
-	RealName string `json:"real_name,optional"`
-	Summary  string `json:"summary,optional"`
+type RespUser struct {
+	ID        string   `json:"_id"`
+	Avatar    string   `json:"avatar"`
+	Birthday  int64    `json:"birthday"`
+	Blog      string   `json:"blog"`
+	City      string   `json:"city"`
+	Email     string   `json:"email"`
+	Followers int64    `json:"followers"`
+	Following int64    `json:"following"`
+	Name      string   `json:"name"`
+	Phone     int64    `json:"phone"`
+	RealName  string   `json:"real_name"`
+	Skills    []string `json:"skills"`
+	Summary   string   `json:"summary"`
 }
 
-type CommUserResp struct {
-	Ok    bool   `json:"ok"`
-	Error string `json:"error"`
+type ReqUser struct {
+	ID       string   `path:"_id"`
+	Avatar   *string  `json:"avatar,optional"`
+	Birthday *int64   `json:"birthday,optional"`
+	City     *string  `json:"city,optional"`
+	Email    *string  `json:"email,optional"`
+	Name     *string  `json:"name,optional"`
+	Phone    *int64   `json:"phone,optional"`
+	RealName *string  `json:"real_name,optional"`
+	Summary  *string  `json:"summary,optional"`
+	Skills   []string `json:"skills,optional"`
+	Blog     *string  `json:"blog,optional"`
+}
+
+type InterviewHardStatus struct {
+	Difficulty string `json:"difficulty"`
+	Count      int64  `json:"count"`
+	Total      int64  `json:"total"`
+}
+
+type ReqUsers struct {
+	ID     string `path:"_id"`
+	Search string `json:"search"`
+	CommonPage
+}
+
+type OtherUser struct {
+	ID      string `json:"_id"`
+	Avatar  string `json:"avatar"`
+	Name    string `json:"name"`
+	Summary string `json:"summary"`
 }
 
 type ReqInterviewId struct {

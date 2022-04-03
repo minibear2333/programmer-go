@@ -84,4 +84,12 @@ service pg-backend {
 
     @handler GetAllInterview
     get /interviews (reqInterviews) returns ([]interview)
+
+    //查看收藏的面经列表 分页
+    @handler GetAllStarInterviews
+    get /user_star_interviews/:_id (reqInterviews) returns ([]interview)
+
+    //收藏新面经
+    @handler AddStarInterview
+    post /user_star_interviews/:_id (reqInterviewId)
 }

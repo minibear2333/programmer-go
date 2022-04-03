@@ -11,6 +11,7 @@ type UserModel interface {
 	Insert(ctx context.Context, data *User) error
 	FindOne(ctx context.Context, id string) (*User, error)
 	Update(ctx context.Context, data *User) error
+	UpdateFields(ctx context.Context, id string, data *map[string]interface{}) error
 	Delete(ctx context.Context, id string) error
 	FindOneByOpenId(ctx context.Context, openId string) (*User, error)
 }
@@ -104,4 +105,17 @@ func (m *defaultUserModel) FindOneByOpenId(ctx context.Context, openId string) (
 	default:
 		return nil, err
 	}
+}
+
+
+func (m *defaultUserModel) UpdateFields(ctx context.Context, id string, data *map[string]interface{}) error {
+	session, err := m.TakeSession()
+	if err != nil {
+		return err
+	}
+
+	defer m.PutSession(session)
+
+	return m.GetCollection(session).Update(bson.M{"_id": bson.ObjectIdHex(id)},
+		bson.M{"$set": data})
 }

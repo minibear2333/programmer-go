@@ -28,24 +28,34 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
 		[]rest.Route{
 			{
-				Method:  http.MethodDelete,
-				Path:    "/users/:_id",
-				Handler: user.DeleteUserHandler(serverCtx),
-			},
-			{
 				Method:  http.MethodPut,
-				Path:    "/users/:_id",
+				Path:    "/user/:_id",
 				Handler: user.UpdateUserHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodGet,
-				Path:    "/users/:_id",
+				Path:    "/user/:_id",
 				Handler: user.GetUserHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodGet,
-				Path:    "/users",
-				Handler: user.GetAllUsersHandler(serverCtx),
+				Path:    "/user_interview_status/:_id",
+				Handler: user.GetInterviewStatusHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/user_followers/:_id",
+				Handler: user.GetAllFollowersHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/user_following/:_id",
+				Handler: user.GetAllFollowingHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/user_following/:_id",
+				Handler: user.AddFollowingHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
@@ -78,6 +88,16 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodGet,
 				Path:    "/interviews",
 				Handler: interviews.GetAllInterviewHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/user_star_interviews/:_id",
+				Handler: interviews.GetAllStarInterviewsHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/user_star_interviews/:_id",
+				Handler: interviews.AddStarInterviewHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),

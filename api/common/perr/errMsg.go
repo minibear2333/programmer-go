@@ -13,6 +13,7 @@ func init() {
 		OperateFailError: "操作失败",
 		InvalidReqError: "不合法请求",
 		InvalidParamError: "不合法的参数",
+		SearchFailError: "列表无数据",
 
 		ErrAuthCodeError: "验证码错误",
 

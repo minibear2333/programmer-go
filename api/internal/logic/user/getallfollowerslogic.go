@@ -9,21 +9,21 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type DeleteUserLogic struct {
+type GetAllFollowersLogic struct {
 	logx.Logger
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 }
 
-func NewDeleteUserLogic(ctx context.Context, svcCtx *svc.ServiceContext) DeleteUserLogic {
-	return DeleteUserLogic{
+func NewGetAllFollowersLogic(ctx context.Context, svcCtx *svc.ServiceContext) GetAllFollowersLogic {
+	return GetAllFollowersLogic{
 		Logger: logx.WithContext(ctx),
 		ctx:    ctx,
 		svcCtx: svcCtx,
 	}
 }
 
-func (l *DeleteUserLogic) DeleteUser(req types.ReqUserId) (resp *types.CommUserResp, err error) {
+func (l *GetAllFollowersLogic) GetAllFollowers(req types.ReqUsers) (resp []types.OtherUser, err error) {
 	// todo: add your logic here and delete this line
 
 	return

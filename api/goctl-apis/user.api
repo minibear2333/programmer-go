@@ -1,28 +1,55 @@
 syntax = "v1"
 
-
 // 用户操作
 type reqUserId {
     ID string `path:"_id"`
 }
-
-type user {
+type respUser {
     ID string `json:"_id"`
-    Avatar string `json:"avatar,optional"`
-    Birthday string `json:"birthday,optional"`
-    Blog string `json:"blog,optional"`
-    City string `json:"city,optional"`
-    Email string `json:"email,optional"`
-    Name string `json:"name,optional"`
-    Phone int64 `json:"phone,optional"`
-    RealName string `json:"real_name,optional"`
-    Summary string `json:"summary,optional"`
+    Avatar string `json:"avatar"`
+    Birthday int64 `json:"birthday"`
+    Blog string `json:"blog"`
+    City string `json:"city"`
+    Email string `json:"email"`
+    Followers int64 `json:"followers"`
+    Following int64 `json:"following"`
+    Name string `json:"name"`
+    Phone int64 `json:"phone"`
+    RealName string `json:"real_name"`
+    Skills []string `json:"skills"`
+    Summary string `json:"summary"`
 }
 
-// 共同类
-type commUserResp {
-    Ok bool `json:"ok"`
-    Error string `json:"error"`
+type reqUser {
+    ID string `path:"_id"`
+    Avatar *string `json:"avatar,optional"`
+    Birthday *int64 `json:"birthday,optional"`
+    City *string `json:"city,optional"`
+    Email *string `json:"email,optional"`
+    Name *string `json:"name,optional"`
+    Phone *int64 `json:"phone,optional"`
+    RealName *string `json:"real_name,optional"`
+    Summary *string `json:"summary,optional"`
+    Skills []string `json:"skills,optional"`
+    Blog *string `json:"blog,optional"`
+}
+
+type InterviewHardStatus {
+    Difficulty string `json:"difficulty"`
+    Count int64 `json:"count"`
+    Total int64 `json:"total"`
+}
+type reqUsers {
+    ID string `path:"_id"`
+    Search string `json:"search"`
+    commonPage
+}
+
+type OtherUser {
+    ID string `json:"_id"`
+    Avatar string `json:"avatar"`
+    Name string `json:"name"`
+    Summary string `json:"summary"`
 }
 
 @server(
@@ -32,19 +59,31 @@ type commUserResp {
 )
 
 service pg-backend {
-    // 不需要增加用户接口，登陆自动增加
-    //    @handler AddUser
-    //    post /users (reqUser) returns (commResp)
+    // 不写删除用户，暂时不需要删除
+    // 暂时不需要获取全部用户
 
-    @handler DeleteUser
-    delete /users/:_id (reqUserId) returns (commUserResp)
-
+    // 只能更新自己
     @handler UpdateUser
-    put /users/:_id (user) returns (commUserResp)
+    put /user/:_id (reqUser) returns (respUser)
 
+    // 只能查看自己
+    // 个人信息
     @handler GetUser
-    get /users/:_id (reqUserId) returns (user)
+    get /user/:_id  (reqUserId) returns (respUser)
 
-    @handler GetAllUsers
-    get /users returns ([]user)
+    // 个人面试题做题状态
+    @handler GetInterviewStatus
+    get /user_interview_status/:_id returns ([]InterviewHardStatus)
+
+    // 查看粉丝列表 分页
+    @handler GetAllFollowers
+    get /user_followers/:_id (reqUsers) returns ([]OtherUser)
+
+    // 查看我关注的人列表 分页
+    @handler GetAllFollowing
+    get /user_following/:_id  (reqUsers) returns ([]OtherUser)
+
+    // 关注别人
+    @handler AddFollowing
+    post /user_following/:_id (reqUserId)
 }

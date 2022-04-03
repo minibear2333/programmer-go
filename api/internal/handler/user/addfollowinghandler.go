@@ -10,7 +10,7 @@ import (
 	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
-func DeleteUserHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func AddFollowingHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.ReqUserId
 		if err := httpx.Parse(r, &req); err != nil {
@@ -18,8 +18,8 @@ func DeleteUserHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			return
 		}
 
-		l := user.NewDeleteUserLogic(r.Context(), svcCtx)
-		resp, err := l.DeleteUser(req)
-		result.HttpResult(r, w, resp, err)
+		l := user.NewAddFollowingLogic(r.Context(), svcCtx)
+		err := l.AddFollowing(req)
+		result.HttpResult(r, w, nil, err)
 	}
 }

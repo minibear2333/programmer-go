@@ -8,10 +8,10 @@ import (
 	"github.com/minibear2333/programmer-go/api/internal/svc"
 )
 
-func GetAllUsersHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func GetInterviewStatusHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		l := user.NewGetAllUsersLogic(r.Context(), svcCtx)
-		resp, err := l.GetAllUsers()
+		l := user.NewGetInterviewStatusLogic(r.Context(), svcCtx)
+		resp, err := l.GetInterviewStatus()
 		result.HttpResult(r, w, resp, err)
 	}
 }
