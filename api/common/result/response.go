@@ -1,5 +1,11 @@
 package result
 
+import (
+	"net/http"
+
+	"github.com/minibear2333/programmer-go/api/common/perr"
+)
+
 type ResponseSuccess struct {
 	Code uint32      `json:"code"`
 	Msg  string      `json:"msg"`
@@ -12,7 +18,7 @@ type ResponseError struct {
 }
 
 func Success(data interface{}) *ResponseSuccess {
-	return &ResponseSuccess{200, "OK", data}
+	return &ResponseSuccess{http.StatusOK, perr.NewErrCode(perr.OK).GetErrMsg(), data}
 }
 
 func Error(errCode uint32, errMsg string) *ResponseError {

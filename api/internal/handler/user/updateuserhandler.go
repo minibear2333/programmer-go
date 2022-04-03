@@ -1,6 +1,7 @@
 package user
 
 import (
+	"github.com/minibear2333/programmer-go/api/common/result"
 	"net/http"
 
 	"github.com/minibear2333/programmer-go/api/internal/logic/user"
@@ -19,10 +20,6 @@ func UpdateUserHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 
 		l := user.NewUpdateUserLogic(r.Context(), svcCtx)
 		resp, err := l.UpdateUser(req)
-		if err != nil {
-			httpx.Error(w, err)
-		} else {
-			httpx.OkJson(w, resp)
-		}
+		result.HttpResult(r, w, resp, err)
 	}
 }

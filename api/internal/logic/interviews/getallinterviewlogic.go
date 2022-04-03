@@ -2,7 +2,8 @@ package interviews
 
 import (
 	"context"
-	"errors"
+	"github.com/minibear2333/programmer-go/api/common/perr"
+	"github.com/pkg/errors"
 
 	"github.com/minibear2333/programmer-go/api/global"
 	"github.com/minibear2333/programmer-go/api/internal/svc"
@@ -27,17 +28,17 @@ func NewGetAllInterviewLogic(ctx context.Context, svcCtx *svc.ServiceContext) Ge
 }
 
 func (l *GetAllInterviewLogic) GetAllInterview(req types.ReqInterviews) (resp []types.Interview, err error) {
-	if req.CommonPage.PageSize < 1 || req.CommonPage.PageSize > 50 {
-		return nil, errors.New("分页大小不合法")
+	if req.CommonPage.PageNo < global.MinPageNo {
+		return nil, errors.Wrapf(perr.NewErrCode(perr.InvalidParamError), "logic.getAllInterview invalid page_no param: %d ", req.CommonPage.PageNo)
 	}
-	if req.CommonPage.PageNo < 1 {
-		return nil, errors.New("页码不合法")
+	if req.CommonPage.PageSize < global.MinPageSize || req.CommonPage.PageSize > global.MaxPageSize {
+		return nil, errors.Wrapf(perr.NewErrCode(perr.InvalidParamError), "logic.getAllInterview invalid page_size param: %d ", req.CommonPage.PageSize)
 	}
 
 	interviews, err := global.Mongo.InterviewsModel.FindByTagsAndSearchWord(context.TODO(), req.Tags, req.Search, req.CommonPage)
 	if err != nil {
 		global.LOG.Error("根据标签和关键字获取面试题列表失败", zap.Error(err))
-		return nil, err
+		return nil, errors.Wrapf(perr.NewErrCode(perr.SearchFailError), "logic.getAllInterview search interview struct: %+v", req)
 	}
 	userID := l.ctx.Value("ID")
 

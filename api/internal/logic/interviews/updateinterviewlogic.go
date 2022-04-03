@@ -2,9 +2,10 @@ package interviews
 
 import (
 	"context"
-	"errors"
 	"github.com/globalsign/mgo/bson"
+	"github.com/minibear2333/programmer-go/api/common/perr"
 	"github.com/minibear2333/programmer-go/api/global"
+	"github.com/pkg/errors"
 	"go.uber.org/zap"
 	"time"
 
@@ -31,18 +32,17 @@ func NewUpdateInterviewLogic(ctx context.Context, svcCtx *svc.ServiceContext) Up
 // UpdateInterview  这个接口应该抛弃，不应该全量更新
 func (l *UpdateInterviewLogic) UpdateInterview(req types.ReqInterviewUpdate) (resp *types.Interview_detail, err error) {
 	if !bson.IsObjectIdHex(req.ID) {
-		err = errors.New("面试题识别错误")
 		global.LOG.Error("面试题目id识别错误")
-		return nil, err
+		return nil, errors.Wrapf(perr.NewErrCode(perr.InvalidParamError), "logic.updateInterview invalid param: %s", req.ID)
 	}
 	interview, err := global.Mongo.InterviewsModel.FindOne(l.ctx, req.ID)
 	if err != nil {
 		global.LOG.Error("根据ID获取面试题失败", zap.Error(err))
-		return nil, err
+		return nil, errors.Wrapf(perr.NewErrCode(perr.NotFoundError), "logic.updateInterview not found: %s", req.ID)
 	}
 	userID := l.ctx.Value("ID")
 	if interview.Author.ID.Hex() != userID{
-		return nil, errors.New("无权更新该面试题目")
+		return nil, errors.Wrapf(perr.NewErrCode(perr.NoAccessError), "logic.updateInterview not access: userId[%s] interviewId[%s]", userID, req.ID)
 	}
 
 	interview.UpdatedTime = time.Now()
@@ -65,7 +65,7 @@ func (l *UpdateInterviewLogic) UpdateInterview(req types.ReqInterviewUpdate) (re
 	err = global.Mongo.InterviewsModel.Update(l.ctx, interview)
 	if err != nil {
 		global.LOG.Error("更新面试题失败:", zap.Error(err))
-		return nil, err
+		return nil, errors.Wrapf(perr.NewErrCode(perr.OperateFailError), "logic.updateInterview operate fail: %s", req.ID)
 	}
 
 	status := false

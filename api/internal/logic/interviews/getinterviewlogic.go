@@ -2,9 +2,11 @@ package interviews
 
 import (
 	"context"
+	"github.com/minibear2333/programmer-go/api/common/perr"
 	"github.com/minibear2333/programmer-go/api/global"
 	"github.com/minibear2333/programmer-go/api/internal/svc"
 	"github.com/minibear2333/programmer-go/api/internal/types"
+	"github.com/pkg/errors"
 	"go.uber.org/zap"
 
 	"github.com/zeromicro/go-zero/core/logx"
@@ -28,7 +30,7 @@ func (l *GetInterviewLogic) GetInterview(req types.ReqInterviewId) (resp *types.
 	interview, err := global.Mongo.InterviewsModel.FindOne(context.TODO(), req.ID)
 	if err != nil {
 		global.LOG.Error("根据ID获取面试题失败", zap.Error(err))
-		return nil, err
+		return nil, errors.Wrapf(perr.NewErrCode(perr.NotFoundError), "logic.getInterview not found: %s", req.ID)
 	}
 	userID := l.ctx.Value("ID")
 
