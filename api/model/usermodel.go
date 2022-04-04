@@ -15,6 +15,7 @@ type UserModel interface {
 	FindUsersBySearchAndIds(ctx context.Context, search string, ids []bson.ObjectId, pageNo int, pageSize int) (*[]User, error)
 	Update(ctx context.Context, data *User) error
 	UpdateFields(ctx context.Context, id string, data *map[string]interface{}) error
+	AddUserToSetByID(ctx context.Context, id string, key string, valueID string) error
 	Delete(ctx context.Context, id string) error
 	FindOneByOpenId(ctx context.Context, openId string) (*User, error)
 }
@@ -186,4 +187,22 @@ func (m *defaultUserModel) UpdateFields(ctx context.Context, id string, data *ma
 
 	return m.GetCollection(session).Update(bson.M{"_id": bson.ObjectIdHex(id)},
 		bson.M{"$set": data})
+}
+
+func (m *defaultUserModel) AddUserToSetByID(ctx context.Context, id string, key string, valueID string) error {
+	if !bson.IsObjectIdHex(id) || !bson.IsObjectIdHex(valueID) {
+		return ErrInvalidObjectId
+	}
+
+	session, err := m.TakeSession()
+	if err != nil {
+		return err
+	}
+
+	defer m.PutSession(session)
+
+	return m.GetCollection(session).Update(bson.M{"_id": bson.ObjectIdHex(id)},
+		bson.M{"$addToSet": bson.M{
+			key: bson.ObjectIdHex(valueID),
+		}})
 }
