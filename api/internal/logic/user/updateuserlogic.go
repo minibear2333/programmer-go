@@ -37,7 +37,7 @@ func (l *UpdateUserLogic) UpdateUser(req types.ReqUser) (resp *types.RespUser, e
 	user, err := global.Mongo.UserModel.FindOne(l.ctx, req.ID)
 	if err != nil {
 		global.LOG.Error("获取用户失败", zap.Error(err))
-		return nil, errors.Wrapf(perr.NewErrCode(perr.NotFoundError), "logic.UpdateUser fail")
+		return nil, errors.Wrap(perr.NewErrCode(perr.NotFoundError), "logic.UpdateUser fail")
 	}
 	userID := l.ctx.Value("ID")
 	if user.ID.Hex() != userID {

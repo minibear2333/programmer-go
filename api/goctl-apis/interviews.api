@@ -12,7 +12,7 @@ type interview {
     Author Author `json:"author"`
     ClickNum int64 `json:"click_num,default=0"`
     Good int64 `json:"good,default=0"`
-    HardStatus string `json:"hard_status"`
+    HardStatus string `json:"hard_status,options=hard,medium,easy"`
     HotNum int64 `json:"hot_num,default=0"`
     Summary string `json:"summary"`
     Tags []string `json:"tags"`
@@ -32,7 +32,7 @@ type interview_detail {
 
 type reqInterviewUpdate {
     ID string `path:"_id"`
-    HardStatus *string `json:"hard_status,optional"`
+    HardStatus *string `json:"hard_status,optional,options=hard,medium,easy"`
     Summary *string `json:"summary,optional"`
     Tags []string `json:"tags,optional"`
     Title *string `json:"title,optional"`
@@ -40,7 +40,7 @@ type reqInterviewUpdate {
 }
 
 type reqInterviewAdd struct {
-    HardStatus string `json:"hard_status"`
+    HardStatus string `json:"hard_status,options=hard,medium,easy"`
     Summary string `json:"summary,omitempty"`
     Tags []string `json:"tags"`
     Title string `json:"title"`

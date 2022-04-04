@@ -13,6 +13,7 @@ import (
 type InterviewsModel interface {
 	Insert(ctx context.Context, data *Interviews) error
 	FindOne(ctx context.Context, id string) (*Interviews, error)
+	CountHardStatus(ctx context.Context, result *[]CountResult) error
 	FindByTagsAndSearchWord(ctx context.Context, tags []string, search string, page types.CommonPage) (*[]Interviews, error)
 	Update(ctx context.Context, data *Interviews) error
 	UpdateFields(ctx context.Context, id string, data *map[string]interface{}) error
@@ -65,6 +66,17 @@ func (m *defaultInterviewsModel) FindOne(ctx context.Context, id string) (*Inter
 	default:
 		return nil, err
 	}
+}
+
+func (m *defaultInterviewsModel) CountHardStatus(ctx context.Context,result *[]CountResult) error {
+	session, err := m.TakeSession()
+	if err != nil {
+		return err
+	}
+
+	defer m.PutSession(session)
+	err = m.GetCollection(session).Pipe([]bson.M{{"$group": bson.M{"_id": "$hard_status","count": bson.M{"$count":bson.M{}}}}}).All(result)
+	return err
 }
 
 func (m *defaultInterviewsModel) FindByTagsAndSearchWord(ctx context.Context, tags []string, search string, page types.CommonPage) (*[]Interviews, error) {

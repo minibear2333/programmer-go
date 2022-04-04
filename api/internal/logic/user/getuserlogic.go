@@ -35,7 +35,7 @@ func (l *GetUserLogic) GetUser(req types.ReqUserId) (resp *types.RespUser, err e
 	user, err := global.Mongo.UserModel.FindOne(l.ctx, req.ID)
 	if err != nil {
 		global.LOG.Error("获取用户失败", zap.Error(err))
-		return nil, errors.Wrapf(perr.NewErrCode(perr.NotFoundError), "logic.GetUser fail")
+		return nil, errors.Wrap(perr.NewErrCode(perr.NotFoundError), "logic.GetUser fail")
 	}
 	userID := l.ctx.Value("ID")
 	if user.ID.Hex() != userID {

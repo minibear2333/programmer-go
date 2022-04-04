@@ -55,6 +55,10 @@ type Interviews struct {
 	Title       string        `bson:"title" json:"title"`
 	UpdatedTime time.Time     `bson:"updated_time" json:"updated_time"`
 }
+type CountResult struct {
+	ID    string `bson:"_id"`
+	Count int64  `bson:"count"`
+}
 
 type InterviewsTags struct {
 	ID      bson.ObjectId `bson:"_id" json:"_id"`
@@ -76,18 +80,12 @@ type User struct {
 	Following []struct {
 		ID bson.ObjectId `bson:"_id" json:"_id"`
 	} `bson:"following" json:"following"`
-	Interviews struct {
-		HardStatus struct {
-			Easy   int64 `bson:"easy" json:"easy"`
-			Hard   int64 `bson:"hard" json:"hard"`
-			Medium int64 `bson:"medium" json:"medium"`
-		} `bson:"hard_status" json:"hard_status"`
-	} `bson:"interviews" json:"interviews"`
-	Name     string   `bson:"name" json:"name"`
-	Phone    int64    `bson:"phone" json:"phone"`
-	RealName string   `bson:"real_name" json:"real_name"`
-	Skills   []string `bson:"skills" json:"skills"`
-	Star     []struct {
+	InterviewsStatus map[string]int64 `bson:"interviews_status" json:"interviews_status"`
+	Name             string           `bson:"name" json:"name"`
+	Phone            int64            `bson:"phone" json:"phone"`
+	RealName         string           `bson:"real_name" json:"real_name"`
+	Skills           []string         `bson:"skills" json:"skills"`
+	Star             []struct {
 		Data []struct {
 			ID          bson.ObjectId `bson:"_id" json:"_id"`
 			Title       string        `bson:"title" json:"title"`

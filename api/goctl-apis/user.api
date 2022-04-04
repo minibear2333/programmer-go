@@ -74,7 +74,7 @@ service pg-backend {
 
     // 个人面试题做题状态
     @handler GetInterviewStatus
-    get /user_interview_status/:_id returns ([]InterviewHardStatus)
+    get /user_interview_status/:_id (reqUserId) returns ([]InterviewHardStatus)
 
     // 查看粉丝列表 分页
     @handler GetAllFollowers

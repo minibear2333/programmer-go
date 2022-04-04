@@ -13,7 +13,7 @@
     },
     "content": "面经内容面经内容面经内容面经内容",
     "hot_num": 12,
-    "hard_status": "困难",
+    "hard_status": "hard",
     "updated_time": {
       "$date": "2022-03-19T16:25:00Z"
     },
