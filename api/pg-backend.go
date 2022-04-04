@@ -24,6 +24,7 @@ func main() {
 	flag.Parse()
 
 	conf.MustLoad(*configFile, &global.CONFIG) // 初始化配置文件
+	initialize.CheckAndReplaceEnv()
 	global.LOG = initialize.Zap()              // 初始化日志库
 	initialize.Redis()                         // 初始化 Redis
 	initialize.Mongo()                         // 初始化 mongo
