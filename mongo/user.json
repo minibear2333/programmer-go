@@ -21,7 +21,7 @@
       "openstack"
     ],
     "summary": "简短介绍一下自己的能力特长与优势",
-    "hard_status": {
+    "interviews_status": {
       "hard": 0,
       "medium": 0,
       "easy": 0
@@ -40,22 +40,12 @@
         }
       }
     ],
-    "star": [
-      {
-        "name": "面经",
-        "type": "interviews",
-        "data": [
+    "star_interviews": [
           {
             "_id": {
               "$oid": "6235ff945c7435dcd65dc285"
-            },
-            "title": "面经标题",
-            "updated_time": {
-              "$date": "2022-03-19T16:00:00Z"
             }
           }
-        ]
-      }
     ]
   },
   {

@@ -67,6 +67,7 @@ func (m *defaultUserModel) FindOne(ctx context.Context, id string) (*User, error
 		return nil, err
 	}
 }
+
 func (m *defaultUserModel) FindBySearch(ctx context.Context, search string, pageNo int, pageSize int) (*[]User, error) {
 	session, err := m.TakeSession()
 	if err != nil {
@@ -75,11 +76,13 @@ func (m *defaultUserModel) FindBySearch(ctx context.Context, search string, page
 
 	defer m.PutSession(session)
 	var data []User
-	filter := bson.M{
-		"title": bson.M{"$regex": bson.RegEx{
+	filter := bson.M{}
+	if search != ""{
+		filter["title"]= bson.M{"$regex": bson.RegEx{
 			Pattern: fmt.Sprintf("%s", search),
 			Options: "im",
-		}}}
+		}}
+	}
 	count, err := m.GetCollection(session).Find(filter).Count()
 	if err != nil {
 		return nil, err
@@ -108,13 +111,15 @@ func (m *defaultUserModel) FindUsersBySearchAndIds(ctx context.Context, search s
 	defer m.PutSession(session)
 	var data []User
 	filter := bson.M{
-		"name": bson.M{"$regex": bson.RegEx{
-			Pattern: fmt.Sprintf("%s", search),
-			Options: "im",
-		}},
 		"_id": bson.M{
 			"$in": oIDs,
 		}}
+	if search != ""{
+		filter["name"]= bson.M{"$regex": bson.RegEx{
+			Pattern: fmt.Sprintf("%s", search),
+			Options: "im",
+		}}
+	}
 	count, err := m.GetCollection(session).Find(filter).Count()
 	if err != nil {
 		return nil, err
@@ -203,6 +208,6 @@ func (m *defaultUserModel) AddUserToSetByID(ctx context.Context, id string, key 
 
 	return m.GetCollection(session).Update(bson.M{"_id": bson.ObjectIdHex(id)},
 		bson.M{"$addToSet": bson.M{
-			key: bson.ObjectIdHex(valueID),
+			key: bson.M{"_id":bson.ObjectIdHex(valueID)},
 		}})
 }

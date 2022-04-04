@@ -71,6 +71,20 @@ type OtherUser struct {
 	Summary string `json:"summary"`
 }
 
+type ReqStarInterviews struct {
+	ID       string   `path:"_id"`
+	Tags     []string `json:"tags"`
+	Search   string   `json:"search"`
+	PageNo   int      `json:"page_no"`
+	PageSize int      `json:"page_size"`
+}
+
+type RespStarInterviews struct {
+	ID          string `json:"_id"`
+	Title       string `json:"title"`
+	UpdatedTime int64  `json:"updated_time"`
+}
+
 type ReqInterviewId struct {
 	ID string `path:"_id"`
 }

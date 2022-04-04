@@ -85,15 +85,9 @@ type User struct {
 	Phone            int64            `bson:"phone" json:"phone"`
 	RealName         string           `bson:"real_name" json:"real_name"`
 	Skills           []string         `bson:"skills" json:"skills"`
-	Star             []struct {
-		Data []struct {
-			ID          bson.ObjectId `bson:"_id" json:"_id"`
-			Title       string        `bson:"title" json:"title"`
-			UpdatedTime time.Time     `bson:"updated_time" json:"updated_time"`
-		} `bson:"data" json:"data"`
-		Name string `bson:"name" json:"name"`
-		Type string `bson:"type" json:"type"`
-	} `bson:"star" json:"star"`
+	StarInterviews   []struct {
+		ID bson.ObjectId `bson:"_id" json:"_id"`
+	} `bson:"star_interviews" json:"star_interviews"`
 	Summary string `bson:"summary" json:"summary"`
 }
 

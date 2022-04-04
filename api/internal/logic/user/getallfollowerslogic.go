@@ -35,10 +35,6 @@ func (l *GetAllFollowersLogic) GetAllFollowers(req types.ReqUsers) (resp []types
 	if req.PageSize < global.MinPageSize || req.PageSize > global.MaxPageSize {
 		return nil, errors.Wrapf(perr.NewErrCode(perr.InvalidParamError), "logic.GetAllFollowers invalid page_size param: %d ", req.PageSize)
 	}
-	userID := l.ctx.Value("ID")
-	if req.ID != userID {
-		return nil, errors.Wrapf(perr.NewErrCode(perr.NoAccessError), "logic.GetAllFollowers can't access: userId[%s] your input[%s]", userID, req.ID)
-	}
 	user, err := global.Mongo.UserModel.FindOne(l.ctx, req.ID)
 	if err != nil {
 		global.LOG.Error("获取用户失败", zap.Error(err))

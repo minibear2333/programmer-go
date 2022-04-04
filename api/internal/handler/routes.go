@@ -57,6 +57,26 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/user_following/:_id",
 				Handler: user.AddFollowingHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodDelete,
+				Path:    "/user_following/:_id",
+				Handler: user.DeleteFollowingHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/user_star_interviews/:_id",
+				Handler: user.GetAllStarInterviewsHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/user_star_interviews/:_id",
+				Handler: user.AddStarInterviewHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodDelete,
+				Path:    "/user_star_interviews/:id",
+				Handler: user.DeleteStarInterviewHandler(serverCtx),
+			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 		rest.WithPrefix("/v1/api"),
@@ -88,16 +108,6 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodGet,
 				Path:    "/interviews",
 				Handler: interviews.GetAllInterviewHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodGet,
-				Path:    "/user_star_interviews/:_id",
-				Handler: interviews.GetAllStarInterviewsHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/user_star_interviews/:_id",
-				Handler: interviews.AddStarInterviewHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),

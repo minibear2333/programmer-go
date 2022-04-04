@@ -35,7 +35,7 @@ func (l *GetAllInterviewLogic) GetAllInterview(req types.ReqInterviews) (resp []
 		return nil, errors.Wrapf(perr.NewErrCode(perr.InvalidParamError), "logic.getAllInterview invalid page_size param: %d ", req.CommonPage.PageSize)
 	}
 
-	interviews, err := global.Mongo.InterviewsModel.FindByTagsAndSearchWord(context.TODO(), req.Tags, req.Search, req.CommonPage)
+	interviews, err := global.Mongo.InterviewsModel.FindByTagsAndSearchWord(context.TODO(),nil, req.Tags, req.Search, req.CommonPage)
 	if err != nil {
 		global.LOG.Error("根据标签和关键字获取面试题列表失败", zap.Error(err))
 		return nil, errors.Wrapf(perr.NewErrCode(perr.SearchFailError), "logic.getAllInterview search interview struct: %+v", req)

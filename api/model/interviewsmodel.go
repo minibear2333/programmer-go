@@ -14,7 +14,7 @@ type InterviewsModel interface {
 	Insert(ctx context.Context, data *Interviews) error
 	FindOne(ctx context.Context, id string) (*Interviews, error)
 	CountHardStatus(ctx context.Context, result *[]CountResult) error
-	FindByTagsAndSearchWord(ctx context.Context, tags []string, search string, page types.CommonPage) (*[]Interviews, error)
+	FindByTagsAndSearchWord(ctx context.Context, oIDs []bson.ObjectId, tags []string, search string, page types.CommonPage) (*[]Interviews, error)
 	Update(ctx context.Context, data *Interviews) error
 	UpdateFields(ctx context.Context, id string, data *map[string]interface{}) error
 	Delete(ctx context.Context, id string) error
@@ -68,18 +68,18 @@ func (m *defaultInterviewsModel) FindOne(ctx context.Context, id string) (*Inter
 	}
 }
 
-func (m *defaultInterviewsModel) CountHardStatus(ctx context.Context,result *[]CountResult) error {
+func (m *defaultInterviewsModel) CountHardStatus(ctx context.Context, result *[]CountResult) error {
 	session, err := m.TakeSession()
 	if err != nil {
 		return err
 	}
 
 	defer m.PutSession(session)
-	err = m.GetCollection(session).Pipe([]bson.M{{"$group": bson.M{"_id": "$hard_status","count": bson.M{"$count":bson.M{}}}}}).All(result)
+	err = m.GetCollection(session).Pipe([]bson.M{{"$group": bson.M{"_id": "$hard_status", "count": bson.M{"$count": bson.M{}}}}}).All(result)
 	return err
 }
 
-func (m *defaultInterviewsModel) FindByTagsAndSearchWord(ctx context.Context, tags []string, search string, page types.CommonPage) (*[]Interviews, error) {
+func (m *defaultInterviewsModel) FindByTagsAndSearchWord(ctx context.Context, oIDs []bson.ObjectId, tags []string, search string, page types.CommonPage) (*[]Interviews, error) {
 	session, err := m.TakeSession()
 	if err != nil {
 		return nil, err
@@ -87,15 +87,21 @@ func (m *defaultInterviewsModel) FindByTagsAndSearchWord(ctx context.Context, ta
 
 	defer m.PutSession(session)
 	var data []Interviews
-	filter := bson.M{
-		"title": bson.M{"$regex": bson.RegEx{
-			Pattern: fmt.Sprintf("%s", search),
-			Options: "im",
-		}}}
+	filter := bson.M{}
 	if tags != nil && len(tags) > 0 {
 		filter["tags"] = tags
 	}
-
+	if oIDs != nil && len(oIDs) > 0 {
+		filter["_id"] = bson.M{
+			"$in": oIDs,
+		}
+	}
+	if search != ""{
+		filter["title"]= bson.M{"$regex": bson.RegEx{
+			Pattern: fmt.Sprintf("%s", search),
+			Options: "im",
+		}}
+	}
 	count, err := m.GetCollection(session).Find(filter).Count()
 	if err != nil {
 		return nil, err
