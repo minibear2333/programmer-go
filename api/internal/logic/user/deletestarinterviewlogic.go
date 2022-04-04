@@ -4,6 +4,8 @@ import (
 	"context"
 
 	"github.com/minibear2333/programmer-go/api/internal/svc"
+	"github.com/minibear2333/programmer-go/api/internal/types"
+
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -21,8 +23,7 @@ func NewDeleteStarInterviewLogic(ctx context.Context, svcCtx *svc.ServiceContext
 	}
 }
 
-func (l *DeleteStarInterviewLogic) DeleteStarInterview() error {
-	// todo: add your logic here and delete this line
+func (l *DeleteStarInterviewLogic) DeleteStarInterview(req types.ReqStarInterviewsID) error {
 
 	return nil
 }

@@ -85,6 +85,10 @@ type RespStarInterviews struct {
 	UpdatedTime int64  `json:"updated_time"`
 }
 
+type ReqStarInterviewsID struct {
+	ID string `path:"_id"`
+}
+
 type ReqInterviewId struct {
 	ID string `path:"_id"`
 }

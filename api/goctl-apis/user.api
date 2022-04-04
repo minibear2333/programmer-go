@@ -4,6 +4,7 @@ syntax = "v1"
 type reqUserId {
     ID string `path:"_id"`
 }
+
 type respUser {
     ID string `json:"_id"`
     Avatar string `json:"avatar"`
@@ -60,10 +61,14 @@ type reqStarInterviews {
     PageNo int `json:"page_no"`
     PageSize int `json:"page_size"`
 }
+
 type respStarInterviews {
     ID string `json:"_id"`
     Title string `json:"title"`
     UpdatedTime int64 `json:"updated_time"`
+}
+type reqStarInterviewsID {
+    ID string `path:"_id"`
 }
 @server(
     jwt: Auth
@@ -110,9 +115,9 @@ service pg-backend {
 
     //收藏新面经
     @handler AddStarInterview
-    post /user_star_interviews/:_id
+    post /user_star_interviews/:_id (reqStarInterviewsID)
 
     // 取消收藏面经
     @handler DeleteStarInterview
-    delete /user_star_interviews/:id
+    delete /user_star_interviews/:id (reqStarInterviewsID)
 }
