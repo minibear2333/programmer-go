@@ -17,6 +17,7 @@ type UserModel interface {
 	UpdateFields(ctx context.Context, id string, data *map[string]interface{}) error
 	AddUserToSetByID(ctx context.Context, id string, key string, valueID string) error
 	Delete(ctx context.Context, id string) error
+	DeleteUserToSetByID(ctx context.Context, id string, key string, valueID string) error
 	FindOneByOpenId(ctx context.Context, openId string) (*User, error)
 }
 
@@ -194,6 +195,7 @@ func (m *defaultUserModel) UpdateFields(ctx context.Context, id string, data *ma
 		bson.M{"$set": data})
 }
 
+// AddUserToSetByID 为用户的嵌套数组增加数据
 func (m *defaultUserModel) AddUserToSetByID(ctx context.Context, id string, key string, valueID string) error {
 	if !bson.IsObjectIdHex(id) || !bson.IsObjectIdHex(valueID) {
 		return ErrInvalidObjectId
@@ -208,6 +210,25 @@ func (m *defaultUserModel) AddUserToSetByID(ctx context.Context, id string, key 
 
 	return m.GetCollection(session).Update(bson.M{"_id": bson.ObjectIdHex(id)},
 		bson.M{"$addToSet": bson.M{
+			key: bson.M{"_id":bson.ObjectIdHex(valueID)},
+		}})
+}
+
+// DeleteUserToSetByID 删除嵌套数组中的记录
+func (m *defaultUserModel) 	DeleteUserToSetByID(ctx context.Context, id string, key string, valueID string) error{
+	if !bson.IsObjectIdHex(id) || !bson.IsObjectIdHex(valueID) {
+		return ErrInvalidObjectId
+	}
+
+	session, err := m.TakeSession()
+	if err != nil {
+		return err
+	}
+
+	defer m.PutSession(session)
+
+	return m.GetCollection(session).Update(bson.M{"_id": bson.ObjectIdHex(id)},
+		bson.M{"$pull": bson.M{
 			key: bson.M{"_id":bson.ObjectIdHex(valueID)},
 		}})
 }

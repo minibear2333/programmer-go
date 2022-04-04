@@ -74,7 +74,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				Method:  http.MethodDelete,
-				Path:    "/user_star_interviews/:id",
+				Path:    "/user_star_interviews/:_id",
 				Handler: user.DeleteStarInterviewHandler(serverCtx),
 			},
 		},

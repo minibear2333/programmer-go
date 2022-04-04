@@ -119,5 +119,5 @@ service pg-backend {
 
     // 取消收藏面经
     @handler DeleteStarInterview
-    delete /user_star_interviews/:id (reqStarInterviewsID)
+    delete /user_star_interviews/:_id (reqStarInterviewsID)
 }
