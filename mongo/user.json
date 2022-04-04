@@ -1,105 +1,106 @@
-[{
-  "_id": {
-    "$oid": "623600a25c7435dcd65dc289"
-  },
-  "open_id": "xxxx",
-  "avatar": "https://avatars.githubusercontent.com/u/42294819?v=4",
-  "name": "minibear2333",
-  "real_name": "",
-  "city": "中国广东深圳",
-  "birthday": {
-    "$date": "1995-03-12T16:00:00Z"
-  },
-  "phone": 12345678910,
-  "email": "pzqu@qq.com",
-  "blog": "https://coding3min.com",
-  "skills": [
-    "golang",
-    "prometheus",
-    "python",
-    "openstack"
-  ],
-  "summary": "简短介绍一下自己的能力特长与优势",
-  "interviews": {
+[
+  {
+    "_id": {
+      "$oid": "623600a25c7435dcd65dc289"
+    },
+    "open_id": "xxxx",
+    "avatar": "https://avatars.githubusercontent.com/u/42294819?v=4",
+    "name": "minibear2333",
+    "real_name": "",
+    "city": "中国广东深圳",
+    "birthday": {
+      "$date": "1995-03-12T16:00:00Z"
+    },
+    "phone": 12345678910,
+    "email": "pzqu@qq.com",
+    "blog": "https://coding3min.com",
+    "skills": [
+      "golang",
+      "prometheus",
+      "python",
+      "openstack"
+    ],
+    "summary": "简短介绍一下自己的能力特长与优势",
     "hard_status": {
       "hard": 0,
       "medium": 0,
       "easy": 0
-    }
-  },
-  "followers": [
-    {
-      "_id": {
-        "$oid": "62369fd85c7435dcd65dc2e9"
-      }
-    }
-  ],
-  "following": [
-    {
-      "_id": {
-        "$oid": "62369fd85c7435dcd65dc2e9"
-      }
-    }
-  ],
-  "star": [
-    {
-      "name": "面经",
-      "type": "interviews",
-      "data": [
-        {
-          "_id": {
-            "$oid": "6235ff945c7435dcd65dc285"
-          },
-          "title": "面经标题",
-          "updated_time": {
-            "$date": "2022-03-19T16:00:00Z"
-          }
+    },
+    "followers": [
+      {
+        "_id": {
+          "$oid": "62369fd85c7435dcd65dc2e9"
         }
-      ]
-    }
-  ]
-},{
-  "_id": {
-    "$oid": "62369fd85c7435dcd65dc2e9"
-  },
-  "open_id": "xxxx",
-  "avatar": "https://avatars.githubusercontent.com/u/42294819?v=4",
-  "name": "testuser1",
-  "real_name": "",
-  "city": "中国广东北京",
-  "birthday": {
-    "$date": "1995-03-12T16:00:00Z"
-  },
-  "phone": 12345678910,
-  "email": "testt@qq.com",
-  "blog": "https://coding3min.com",
-  "skills": [
-    "golang",
-    "prometheus",
-    "python",
-    "openstack"
-  ],
-  "summary": "简短介绍一下自己的能力特长与优势",
-  "interviews": {
-    "hard_status": {
-      "hard": 0,
-      "medium": 0,
-      "easy": 0
-    }
-  },
-  "followers": [
-    {
-      "_id": {
-        "$oid": "623600a25c7435dcd65dc289"
       }
-    }
-  ],
-  "following": [
-    {
-      "_id": {
-        "$oid": "623600a25c7435dcd65dc289"
+    ],
+    "following": [
+      {
+        "_id": {
+          "$oid": "62369fd85c7435dcd65dc2e9"
+        }
       }
-    }
-  ],
-  "star": []
-}]
+    ],
+    "star": [
+      {
+        "name": "面经",
+        "type": "interviews",
+        "data": [
+          {
+            "_id": {
+              "$oid": "6235ff945c7435dcd65dc285"
+            },
+            "title": "面经标题",
+            "updated_time": {
+              "$date": "2022-03-19T16:00:00Z"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "62369fd85c7435dcd65dc2e9"
+    },
+    "open_id": "xxxx",
+    "avatar": "https://avatars.githubusercontent.com/u/42294819?v=4",
+    "name": "testuser1",
+    "real_name": "",
+    "city": "中国广东北京",
+    "birthday": {
+      "$date": "1995-03-12T16:00:00Z"
+    },
+    "phone": 12345678910,
+    "email": "testt@qq.com",
+    "blog": "https://coding3min.com",
+    "skills": [
+      "golang",
+      "prometheus",
+      "python",
+      "openstack"
+    ],
+    "summary": "简短介绍一下自己的能力特长与优势",
+    "interviews": {
+      "hard_status": {
+        "hard": 0,
+        "medium": 0,
+        "easy": 0
+      }
+    },
+    "followers": [
+      {
+        "_id": {
+          "$oid": "623600a25c7435dcd65dc289"
+        }
+      }
+    ],
+    "following": [
+      {
+        "_id": {
+          "$oid": "623600a25c7435dcd65dc289"
+        }
+      }
+    ],
+    "star": []
+  }
+]

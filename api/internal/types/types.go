@@ -59,7 +59,7 @@ type InterviewHardStatus struct {
 
 type ReqUsers struct {
 	ID       string `path:"_id"`
-	Search   string `json:"search"`
+	Search   string `json:"search,optional"`
 	PageNo   int    `json:"page_no"`
 	PageSize int    `json:"page_size"`
 }

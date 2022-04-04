@@ -32,14 +32,14 @@ func (l *GetUserLogic) GetUser(req types.ReqUserId) (resp *types.RespUser, err e
 		global.LOG.Error("id识别错误")
 		return nil, errors.Wrapf(perr.NewErrCode(perr.InvalidParamError), "logic.GetUser invalid param: %s", req.ID)
 	}
+	userID := l.ctx.Value("ID")
+	if req.ID != userID {
+		return nil, errors.Wrapf(perr.NewErrCode(perr.NoAccessError), "logic.GetUser can't access: userId[%s] your input[%s]", userID, req.ID)
+	}
 	user, err := global.Mongo.UserModel.FindOne(l.ctx, req.ID)
 	if err != nil {
 		global.LOG.Error("获取用户失败", zap.Error(err))
 		return nil, errors.Wrap(perr.NewErrCode(perr.NotFoundError), "logic.GetUser fail")
-	}
-	userID := l.ctx.Value("ID")
-	if user.ID.Hex() != userID {
-		return nil, errors.Wrapf(perr.NewErrCode(perr.NoAccessError), "logic.GetUser can't access: userId[%s] your input[%s]", userID, req.ID)
 	}
 
 	return &types.RespUser{

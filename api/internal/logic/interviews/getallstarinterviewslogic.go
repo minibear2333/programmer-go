@@ -2,6 +2,9 @@ package interviews
 
 import (
 	"context"
+	"github.com/minibear2333/programmer-go/api/common/perr"
+	"github.com/minibear2333/programmer-go/api/global"
+	"github.com/pkg/errors"
 
 	"github.com/minibear2333/programmer-go/api/internal/svc"
 	"github.com/minibear2333/programmer-go/api/internal/types"
@@ -24,7 +27,13 @@ func NewGetAllStarInterviewsLogic(ctx context.Context, svcCtx *svc.ServiceContex
 }
 
 func (l *GetAllStarInterviewsLogic) GetAllStarInterviews(req types.ReqInterviews) (resp []types.Interview, err error) {
-	// todo: add your logic here and delete this line
+	if req.CommonPage.PageNo < global.MinPageNo {
+		return nil, errors.Wrapf(perr.NewErrCode(perr.InvalidParamError), "logic.GetAllStarInterviews invalid page_no param: %d ", req.CommonPage.PageNo)
+	}
+	if req.CommonPage.PageSize < global.MinPageSize || req.CommonPage.PageSize > global.MaxPageSize {
+		return nil, errors.Wrapf(perr.NewErrCode(perr.InvalidParamError), "logic.GetAllStarInterviews invalid page_size param: %d ", req.CommonPage.PageSize)
+	}
 
+	// TODO: ADD LOGIN
 	return
 }

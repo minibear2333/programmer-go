@@ -12,7 +12,6 @@ func Mongo() {
 	global.Mongo = &model.MongoClient{
 		CommentsModel:       model.NewCommentsModel(mongoCfg.Addr, "comments"),
 		InterviewsModel:     model.NewInterviewsModel(mongoCfg.Addr, "interviews"),
-		HardStatusModel:     model.NewHardStatusModel(mongoCfg.Addr, "hard_status"),
 		InterviewsTagsModel: model.NewInterviewsTagsModel(mongoCfg.Addr, "interviews_tags"),
 		UserModel:           model.NewUserModel(mongoCfg.Addr, "user"),
 		MessageCenterModel:  model.NewMessageCenterModel(mongoCfg.Addr, "message_center"),
