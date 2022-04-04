@@ -1,1 +1,1 @@
-docker run --rm -it -p 8888:8888 pg-backend:v1
+docker run --rm -it -p 80:80 pg-backend:v1

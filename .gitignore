@@ -19,4 +19,5 @@ vendor/
 .idea
 logs
 .pg-backend.yaml
-
+.DS_Store
+*.zip

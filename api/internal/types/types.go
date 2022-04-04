@@ -59,9 +59,9 @@ type InterviewHardStatus struct {
 
 type ReqUsers struct {
 	ID       string `path:"_id"`
-	Search   string `json:"search,optional"`
-	PageNo   int    `json:"page_no"`
-	PageSize int    `json:"page_size"`
+	Search   string `form:"search,optional"`
+	PageNo   int    `form:"page_no"`
+	PageSize int    `form:"page_size"`
 }
 
 type OtherUser struct {
@@ -73,10 +73,10 @@ type OtherUser struct {
 
 type ReqStarInterviews struct {
 	ID       string   `path:"_id"`
-	Tags     []string `json:"tags"`
-	Search   string   `json:"search"`
-	PageNo   int      `json:"page_no"`
-	PageSize int      `json:"page_size"`
+	Tags     []string `form:"tags,optional"`
+	Search   string   `form:"search,optional"`
+	PageNo   int      `form:"page_no"`
+	PageSize int      `form:"page_size"`
 }
 
 type RespStarInterviews struct {
@@ -138,8 +138,8 @@ type ReqInterviewAdd struct {
 }
 
 type ReqInterviews struct {
-	Tags   []string `json:"tags"`
-	Search string   `json:"search"`
+	Tags   []string `form:"tags,optional"`
+	Search string   `form:"search,optional"`
 	CommonPage
 }
 
@@ -149,8 +149,8 @@ type CommInterviewsResp struct {
 }
 
 type CommonPage struct {
-	PageNo   int `json:"page_no"`
-	PageSize int `json:"page_size"`
+	PageNo   int `form:"page_no"`
+	PageSize int `form:"page_size"`
 }
 
 type RespInterviewsTags struct {

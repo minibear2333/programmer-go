@@ -42,9 +42,9 @@ type InterviewHardStatus {
 }
 type reqUsers {
     ID string `path:"_id"`
-    Search string `json:"search,optional"`
-    PageNo int `json:"page_no"`
-    PageSize int `json:"page_size"`
+    Search string `form:"search,optional"`
+    PageNo int `form:"page_no"`
+    PageSize int `form:"page_size"`
 }
 
 type OtherUser {
@@ -56,10 +56,10 @@ type OtherUser {
 
 type reqStarInterviews {
     ID string `path:"_id"`
-    Tags []string `json:"tags"`
-    Search string `json:"search"`
-    PageNo int `json:"page_no"`
-    PageSize int `json:"page_size"`
+    Tags []string `form:"tags,optional"`
+    Search string `form:"search,optional"`
+    PageNo int `form:"page_no"`
+    PageSize int `form:"page_size"`
 }
 
 type respStarInterviews {

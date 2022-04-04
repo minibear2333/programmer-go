@@ -15,6 +15,7 @@ import (
 func GetAllStarInterviewsHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.ReqStarInterviews
+		
 		if err := httpx.Parse(r, &req); err != nil {
 			err = errors.Wrap(perr.NewErrCode(perr.InvalidParamError), err.Error())
 			result.HttpResult(r, w, nil, err)

@@ -48,8 +48,8 @@ type reqInterviewAdd struct {
 }
 
 type reqInterviews {
-    Tags []string `json:"tags"`
-    Search string `json:"search"`
+    Tags []string `form:"tags,optional"`
+    Search string `form:"search,optional"`
     commonPage
 }
 // 共同类
@@ -59,8 +59,8 @@ type commInterviewsResp {
 }
 
 type commonPage {
-    PageNo int `json:"page_no"`
-    PageSize int `json:"page_size"`
+    PageNo int `form:"page_no"`
+    PageSize int `form:"page_size"`
 }
 
 @server(
