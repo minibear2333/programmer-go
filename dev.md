@@ -6,8 +6,8 @@
 初始化本地redis mongo环境
 
 ```shell
-cd api
 docker-compose up -d redis mongo
+docker exec -it pg-redis redis-cli -p 16379 -a "1234567890"  HMSET "c7cec5" "openid" "aROD9s357bclJK9eLwXrGfMsuvZm"
 ```
 
 写入hosts文件，如果是`win`环境请手动写入
@@ -32,8 +32,7 @@ go mod tidy
 HMSET "c7cec5" "openid" "aROD9s357bclJK9eLwXrGfMsuvZm"
 ```
 
-* [面试题接口](https://documenter.getpostman.com/view/18714614/UVyoXyKn)
-* [登陆接口](https://documenter.getpostman.com/view/18714614/UVyoXyKo)
+* [文档](https://documenter.getpostman.com/view/18714614/UVyoXyKn)
 
 
 ### 开发流程

@@ -1,0 +1,36 @@
+name: Docker Image CI
+
+on:
+  create:
+    tags:
+      - v*
+
+jobs:
+  build-and-push:
+
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./api
+
+    steps:
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
+
+      - uses: actions/checkout@v3
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag ${{ secrets.DOCKERHUB_USERNAME }}/pg-backend:${{ steps.get_version.outputs.VERSION }}
+        working-directory: ${{ env.working-directory }}
+
+      - name: Login to DockerHub
+        run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: push
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/pg-backend:${{ steps.get_version.outputs.VERSION }}
+
+      - name: docker image rename to latest
+        run: docker tag ${{ secrets.DOCKERHUB_USERNAME }}/pg-backend:${{ steps.get_version.outputs.VERSION }} ${{ secrets.DOCKERHUB_USERNAME }}/pg-backend:latest
+
+      - name: push latest
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/pg-backend:latest
+
