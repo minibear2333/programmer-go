@@ -31,6 +31,15 @@ func NewUpdateInterviewLogic(ctx context.Context, svcCtx *svc.ServiceContext) Up
 
 // UpdateInterview  这个接口应该抛弃，不应该全量更新
 func (l *UpdateInterviewLogic) UpdateInterview(req types.ReqInterviewUpdate) (resp *types.Interview_detail, err error) {
+	// 校验标签输入
+	is_ok,err := global.Mongo.InterviewsTagsModel.CheckTag(l.ctx,req.Tags)
+	if err != nil {
+		global.LOG.Error("创建面试题失败", zap.Error(err))
+		return nil, perr.NewErrCode(perr.InvalidInterviewTags)
+	}
+	if !is_ok{
+		return nil, perr.NewErrCode(perr.InvalidInterviewTags)
+	}
 	if !bson.IsObjectIdHex(req.ID) {
 		global.LOG.Error("面试题目id识别错误")
 		return nil, errors.Wrapf(perr.NewErrCode(perr.InvalidParamError), "logic.updateInterview invalid param: %s", req.ID)

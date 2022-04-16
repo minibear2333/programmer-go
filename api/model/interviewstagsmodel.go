@@ -4,11 +4,13 @@ import (
 	"context"
 	"github.com/globalsign/mgo/bson"
 	"github.com/zeromicro/go-zero/core/stores/mongo"
+	"strings"
 )
 
 type InterviewsTagsModel interface {
 	Insert(ctx context.Context, data *InterviewsTags) error
 	FindOne(ctx context.Context, id string) (*InterviewsTags, error)
+	CheckTag(ctx context.Context, tags []string) (bool, error)
 	FindAll(ctx context.Context) (*[]InterviewsTags, error)
 	Update(ctx context.Context, data *InterviewsTags) error
 	Delete(ctx context.Context, id string) error
@@ -62,8 +64,35 @@ func (m *defaultInterviewsTagsModel) FindOne(ctx context.Context, id string) (*I
 	}
 }
 
+func (m *defaultInterviewsTagsModel) CheckTag(ctx context.Context, tags []string) (bool, error) {
 
-func (m *defaultInterviewsTagsModel) FindAll(ctx context.Context) (*[]InterviewsTags, error){
+	session, err := m.TakeSession()
+	if err != nil {
+		return false, err
+	}
+
+	defer m.PutSession(session)
+	var data InterviewsTags
+	for i := range tags {
+		tagArr := strings.Split(tags[i], "-")
+		if len(tagArr) != 2 {
+			return false, nil
+		}
+		query := bson.M{"name": tagArr[0], "sub_tags": bson.M{"$elemMatch": bson.M{"$eq": tagArr[1]}}}
+		err = m.GetCollection(session).Find(query).One(&data)
+		switch err {
+		case mongo.ErrNotFound:
+			return false, ErrNotFound
+		default:
+			if err!=nil{
+				return false, err
+			}
+		}
+	}
+	return true, nil
+}
+
+func (m *defaultInterviewsTagsModel) FindAll(ctx context.Context) (*[]InterviewsTags, error) {
 	session, err := m.TakeSession()
 	if err != nil {
 		return nil, err

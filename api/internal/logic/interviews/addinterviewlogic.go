@@ -31,6 +31,15 @@ func NewAddInterviewLogic(ctx context.Context, svcCtx *svc.ServiceContext) AddIn
 
 func (l *AddInterviewLogic) AddInterview(req types.ReqInterviewAdd) (resp *types.Interview_detail, err error) {
 	userID,userName := l.ctx.Value("ID"),l.ctx.Value("Username")
+
+	is_ok,err := global.Mongo.InterviewsTagsModel.CheckTag(l.ctx,req.Tags)
+	if err != nil {
+		global.LOG.Error("创建面试题失败", zap.Error(err))
+		return nil, perr.NewErrCode(perr.InvalidInterviewTags)
+	}
+	if !is_ok{
+		return nil, perr.NewErrCode(perr.InvalidInterviewTags)
+	}
 	interview := model.Interviews{
 		Author: model.Author{
 			ID:   bson.ObjectIdHex(userID.(string)),

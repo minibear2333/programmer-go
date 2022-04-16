@@ -19,6 +19,7 @@ func init() {
 
 		AuthorIdError: "错误的作者ID",
 		InterviewGenerateError: "面试题生成失败",
+		InvalidInterviewTags: "面试题标签格式错误，请输入平台已存在的标签",
 	}
 }
 

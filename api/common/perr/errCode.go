@@ -25,4 +25,5 @@ const (
 const (
 	AuthorIdError uint32 = 30001
 	InterviewGenerateError uint32 = 30002
+	InvalidInterviewTags uint32 = 30003
 )
