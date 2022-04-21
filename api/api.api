@@ -5,6 +5,7 @@ import (
 	"goctl-apis/user.api"
 	"goctl-apis/interviews.api"
 	"goctl-apis/interviews_tags.api"
+	"goctl-apis/message_config.api"
 )
 
 info(

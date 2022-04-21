@@ -9,7 +9,10 @@
 
 如果只是想在本地启动本程序便于前端调试或者体验`api`的话，可以继续；如果是需要参与开发，请跳到 [如何贡献](#如何贡献)
 
-先安装 `docker` 和 `docker-compose` 安装完毕后直接在该项目的根目录运行
+先安装 `docker` 和 `docker-compose` ，`docker` 的安装可以参考 [菜鸟教程](https://www.runoob.com/docker/macos-docker-install.html) ，`docker-compose` 在`mac`和`win`上如果安装了桌面版本已自带了
+
+
+安装完毕后直接在该项目的根目录运行
 
 ```bash
 docker-compose up -d

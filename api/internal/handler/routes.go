@@ -7,6 +7,7 @@ import (
 	interviews "github.com/minibear2333/programmer-go/api/internal/handler/interviews"
 	interviews_tags "github.com/minibear2333/programmer-go/api/internal/handler/interviews_tags"
 	login "github.com/minibear2333/programmer-go/api/internal/handler/login"
+	message_config "github.com/minibear2333/programmer-go/api/internal/handler/message_config"
 	user "github.com/minibear2333/programmer-go/api/internal/handler/user"
 	"github.com/minibear2333/programmer-go/api/internal/svc"
 
@@ -120,6 +121,23 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodGet,
 				Path:    "/interviews_tags",
 				Handler: interviews_tags.GetAllInterviewTagsHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/v1/api"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPut,
+				Path:    "/message_config",
+				Handler: message_config.UpdateMessageConfigHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/message_config",
+				Handler: message_config.GetMessageConfigHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),

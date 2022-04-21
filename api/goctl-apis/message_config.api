@@ -1,0 +1,28 @@
+syntax = "v1"
+
+type MailNotice {
+    Comments bool `json:"comments"`
+    Follow bool `json:"follow"`
+    GoodAndStar bool `json:"good_and_star"`
+}
+
+type MessageConfig {
+    Comments bool `json:"comments"`
+    Follow bool `json:"follow"`
+    GoodAndStar bool `json:"good_and_star"`
+    MailNotice MailNotice `json:"mail_notice"`
+}
+
+@server(
+    jwt: Auth
+    group: message_config
+    prefix: v1/api
+)
+
+service pg-backend {
+    @handler UpdateMessageConfig
+    put /message_config (MessageConfig) returns (MessageConfig)
+
+    @handler GetMessageConfig
+    get /message_config () returns (MessageConfig)
+}

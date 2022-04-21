@@ -158,3 +158,16 @@ type RespInterviewsTags struct {
 	Name    string   `json:"name"`
 	SubTags []string `json:"sub_tags"`
 }
+
+type MailNotice struct {
+	Comments    bool `json:"comments"`
+	Follow      bool `json:"follow"`
+	GoodAndStar bool `json:"good_and_star"`
+}
+
+type MessageConfig struct {
+	Comments    bool       `json:"comments"`
+	Follow      bool       `json:"follow"`
+	GoodAndStar bool       `json:"good_and_star"`
+	MailNotice  MailNotice `json:"mail_notice"`
+}
